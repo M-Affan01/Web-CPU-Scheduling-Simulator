@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS OS | Processor Command Center</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322d3ee' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='4' width='16' height='16' rx='2'/><rect x='9' y='9' width='6' height='6'/><path d='M15 2v2'/><path d='M15 20v2'/><path d='M2 15h2'/><path d='M2 9h2'/><path d='M20 15h2'/><path d='M20 9h2'/><path d='M9 2v2'/><path d='M9 20v2'/></svg>">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+        :root {
+            /* Maximum Contrast Palette - RE-BOOSTED */
+            --bg: #000000;
+            --surface: #0f172a;
+            /* Slightly lighter for contrast */
+            --surface-bright: #1e293b;
+            --accent: #a855f7;
+            --cyan: #22d3ee;
+            --rose: #fb7185;
+            --text-pure: #ffffff;
+            --text-label: #cbd5e1;
+            --border: #475569;
+            /* Brighter border */
+            --border-active: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: default;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text-pure);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 150px;
+            /* More room at bottom */
+            font-size: 16px;
+        }
+
+        /* Command Center Header - Top Bar */
+        .header {
+            padding: 15px 40px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff !important;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #000;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-label);
+            text-transform: uppercase;
+        }
+
+        .pulse-red {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ef4444;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        #digital-clock {
+            font-family: 'JetBrains Mono';
+            color: var(--cyan);
+            font-weight: 900;
+            font-size: 1rem;
+        }
+
+        /* Dash Grid - Optimized for Exposure */
+        .dash-container {
+            max-width: 1450px;
+            /* Slightly tighter */
+            margin: 20px auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            /* Tighter gap */
+        }
+
+        .panel {
+            background: #0a0a0a !important;
+            border: 2px solid #334155 !important;
+            border-radius: 12px;
+            /* Sharper */
+            padding: 20px;
+            /* Reduced */
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .panel:hover {
+            border-color: #fff !important;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .w-4 {
+            grid-column: span 4;
+        }
+
+        .w-8 {
+            grid-column: span 8;
+        }
+
+        .w-6 {
+            grid-column: span 6;
+        }
+
+        .panel-header {
+            font-size: 0.95rem;
+            /* Reduced from 1.1rem */
+            font-weight: 900;
+            color: #ffffff !important;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1.5px solid #334155 !important;
+            padding-bottom: 10px;
+        }
+
+        /* Task Manager - Large Controls */
+        .task-list {
+            max-height: 250px;
+            /* Reduced */
+            overflow-y: auto;
+        }
+
+        .task-item {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr 40px;
+            gap: 12px;
+            padding: 10px;
+            background: #1e293b;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            align-items: center;
+            border: 1px solid #334155;
+        }
+
+        .num-input {
+            background: #000;
+            border: 1.5px solid #475569;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #fff !important;
+            font-family: 'JetBrains Mono';
+            font-weight: 700;
+            width: 100%;
+            font-size: 1rem;
+            /* Reduced from 1.2rem */
+            transition: 0.2s;
+        }
+
+        .num-input:focus {
+            border-color: #fff;
+            outline: none;
+        }
+
+        /* Monitor - Massive Results */
+        .display-area {
+            background: #000;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .gantt-track {
+            display: flex;
+            height: 60px;
+            background: #000;
+            border: 2px solid #475569;
+            border-radius: 8px;
+            overflow: visible !important;
+            /* CRITICAL: Must be visible to see labels below */
+            position: relative;
+            margin-bottom: 45px;
+            /* Space for the numbers */
+        }
+
+        .gantt-node {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #000 !important;
+            position: relative;
+            border-right: 2px solid rgba(0, 0, 0, 0.5);
+            border-left: 2px solid rgba(0, 0, 0, 0.5);
+            margin-left: -2px;
+        }
+
+        .time-label {
+            position: absolute;
+            bottom: -35px;
+            /* Positioned below the bar */
+            font-family: 'JetBrains Mono';
+            font-size: 1rem;
+            color: #fbbf24 !important;
+            /* Bright Yellow for visibility */
+            font-weight: 900;
+            white-space: nowrap;
+            z-index: 100;
+        }
+
+        .time-label.start-marker {
+            left: 0;
+            transform: translateX(-50%);
+        }
+
+        .time-label.end-marker {
+            right: 0;
+            transform: translateX(50%);
+        }
+
+        /* Metric Typography - GIANT */
+        .big-stat {
+            text-align: center;
+            padding: 5px;
+        }
+
+        .big-stat label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: #cbd5e1 !important;
+            margin-bottom: 8px;
+        }
+
+        .big-stat value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fff !important;
+            line-height: 1;
+            letter-spacing: -1.5px;
+        }
+
+        /* Reduced from 4rem */
+
+        /* Tables & Terminal - High Visibility */
+        .terminal {
+            background: #000 !important;
+            border: 2px solid #334155 !important;
+            border-radius: 12px;
+            padding: 18px;
+            height: 280px;
+            /* Reduced */
+            overflow-y: auto;
+            font-family: 'JetBrains Mono';
+            font-size: 0.95rem;
+            /* Reduced */
+            color: #22d3ee !important;
+            line-height: 1.5;
+        }
+
+        .calc-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono';
+            font-size: 0.95rem;
+            /* Reduced */
+        }
+
+        .calc-matrix th {
+            padding: 14px;
+            text-align: left;
+            color: #22d3ee !important;
+            background: #0f172a !important;
+            border-bottom: 2px solid #a855f7 !important;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .calc-matrix td {
+            padding: 14px;
+            color: #ffffff !important;
+            border-bottom: 1.5px solid #1e293b !important;
+            font-weight: 700;
+        }
+
+        .calc-matrix tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Dock System - Compact & Professional */
+        .control-dock {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid #334155;
+            padding: 10px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+            z-index: 1001;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-action {
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 1.2px solid #334155;
+            background: transparent;
+            color: #94a3b8;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 85px;
+            gap: 4px;
+        }
+
+        .btn-action i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-action:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-action.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-action.run {
+            background: var(--cyan);
+            color: #000;
+            border-color: var(--cyan);
+            font-weight: 900;
+            min-width: 120px;
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        .btn-action.run:hover {
+            background: #fff;
+            border-color: #fff;
+            transform: scale(1.02);
+        }
+
+        .dock-separator {
+            width: 1px;
+            height: 30px;
+            background: #334155;
+            margin: 0 5px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <lord-icon src="https://cdn.lordicon.com/jlvovmue.json" trigger="loop"
+                colors="primary:#fff,secondary:#22d3ee" style="width:32px;height:32px"></lord-icon>
+            CPU SCHEDULER
+        </div>
+        <div class="system-status">
+            <div class="status-badge">
+                <div class="pulse-red"></div>
+                SYSTEM LIVE
+            </div>
+            <div id="digital-clock">00:00:00</div>
+        </div>
+    </header>
+
+    <div class="dash-container">
+        <!-- Section 1 -->
+        <div class="panel w-4">
+            <div class="panel-header">
+                <span>Processor Input</span>
+                <span style="color:var(--accent)">STEP 01</span>
+            </div>
+            <div id="task-list" class="task-list"></div>
+            <div style="margin-top:24px; display:flex; gap:12px;">
+                <button class="btn-action" onclick="addProcess()" style="flex:1; background:var(--surface-bright);"><i
+                        data-lucide="plus-square"></i> Add Task</button>
+                <div id="rr-config" style="display:none;">
+                    <input type="number" id="time-quantum" value="2" class="num-input" style="width:75px"
+                        title="Time Quantum">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="panel w-8">
+            <div class="panel-header">
+                <span>Execution Timeline</span>
+                <span style="color:var(--cyan)">LIVE MONITORING</span>
+            </div>
+            <div class="display-area">
+                <div id="gantt-track" class="gantt-track">
+                    <div
+                        style="width:100%; display:flex; align-items:center; justify-content:center; color:var(--text-label); font-size:1.1rem; font-weight:700;">
+                        [ KERNEL AWAITING TASK FLOW ]
+                    </div>
+                </div>
+                <!-- Dynamic Legend -->
+                <div id="gantt-legend"
+                    style="display:flex; gap:15px; margin-top:35px; flex-wrap:wrap; justify-content:center;"></div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; margin-top:25px;">
+                <div class="big-stat">
+                    <label>AVERAGE TAT</label>
+                    <value id="stat-tat">0.0</value>
+                </div>
+                <div class="big-stat">
+                    <label>AVERAGE WT</label>
+                    <value id="stat-wt" style="color:var(--cyan)">0.0</value>
+                </div>
+                <div class="big-stat">
+                    <label>TOTAL CYCLES</label>
+                    <value id="stat-ct" style="color:var(--rose)">0</value>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="panel w-6">
+            <div class="panel-header">
+                <span><i data-lucide="terminal" style="width:18px; vertical-align:middle; margin-right:8px"></i> System
+                    Console</span>
+                <span style="color:var(--cyan); font-size:0.75rem; font-weight:800;">SYSTEM FEED</span>
+            </div>
+            <div class="terminal" id="log-list">
+                <div style="color:#22d3ee !important; font-weight:700;">> Nexus OS High-Visibility Kernel Ready.</div>
+            </div>
+        </div>
+
+        <div class="panel w-6">
+            <div class="panel-header">
+                <span><i data-lucide="table" style="width:18px; vertical-align:middle; margin-right:8px"></i>
+                    Calculation Matrix</span>
+                <span style="color:var(--rose); font-size:0.75rem; font-weight:800;">DATA MATRIX</span>
+            </div>
+            <div style="height:320px; overflow-y:auto;">
+                <table class="calc-matrix">
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>AT</th>
+                            <th>BT</th>
+                            <th>CT</th>
+                            <th>TAT</th>
+                            <th>WT</th>
+                            <th>RT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrix-body">
+                        <tr>
+                            <td colspan="7"
+                                style="text-align:center; color:#ffffff !important; font-weight:700; font-style:italic; padding-top:120px; opacity:1 !important;">
+                                <i data-lucide="cpu"
+                                    style="width:32px; display:block; margin:0 auto 15px; color:#22d3ee;"></i>
+                                Waiting for execution command...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-dock">
+        <button class="btn-action active" id="btn-fcfs" onclick="selectAlgo('fcfs')"><i
+                data-lucide="arrow-right"></i>FCFS</button>
+        <button class="btn-action" id="btn-sjf" onclick="selectAlgo('sjf')"><i
+                data-lucide="bar-chart-2"></i>SJF-NP</button>
+        <button class="btn-action" id="btn-srtf" onclick="selectAlgo('srtf')"><i data-lucide="zap"></i>SRTF-P</button>
+        <button class="btn-action" id="btn-rr" onclick="selectAlgo('rr')"><i data-lucide="refresh-cw"></i>RR</button>
+
+        <div class="dock-separator"></div>
+
+        <button class="btn-action" onclick="addSample()"><i data-lucide="folder-open"></i>Load Sample</button>
+
+        <div class="dock-separator"></div>
+
+        <button class="btn-action run" onclick="startCore()"><i data-lucide="play"></i> EXECUTE CORE</button>
+    </div>
+
+    <script>
+        // ===== Initialization =====
+        window.onload = () => {
+            lucide.createIcons();
+            addProcess(); // Start with one empty process row
+        };
+
+        // ===== System Logic =====
+        let currentAlgo = 'fcfs';
+        const colors = ['#a855f7', '#22d3ee', '#fb7185', '#fbbf24', '#4ade80', '#6366f1', '#ec4899', '#f97316'];
+
+        function selectAlgo(algo) {
+            currentAlgo = algo;
+            document.querySelectorAll('.btn-action').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${algo}`).classList.add('active');
+            document.getElementById('rr-config').style.display = algo === 'rr' ? 'block' : 'none';
+        }
+
+        function addProcess(at = '', bt = '') {
+            const existing = Array.from(document.querySelectorAll('.task-item')).map(el => parseInt(el.id.replace('row-', '')));
+            let n = 1;
+            while (existing.includes(n)) n++;
+
+            const list = document.getElementById('task-list');
+            const div = document.createElement('div');
+            div.className = 'task-item';
+            div.id = `row-${n}`;
+            div.innerHTML = `
+        <div style="font-weight:900; color:var(--accent); font-size:1.1rem;">P${n}</div>
+        <input type="number" id="at-${n}" value="${at}" placeholder="AT" class="num-input" autocomplete="off">
+        <input type="number" id="bt-${n}" value="${bt}" placeholder="BT" class="num-input" autocomplete="off">
+        <button onclick="removeProcess(${n})" style="background:none; border:none; color:var(--rose); cursor:pointer;"><i data-lucide="trash-2" style="width:20px"></i></button>
+    `;
+            list.appendChild(div);
+            lucide.createIcons();
+            gsap.from(div, { opacity: 0, x: -15, duration: 0.3 });
+        }
+
+        function removeProcess(id) {
+            const el = document.getElementById(`row-${id}`);
+            gsap.to(el, { opacity: 0, scale: 0.8, duration: 0.2, onComplete: () => el.remove() });
+        }
+
+        function getProcs() {
+            const p = [];
+            document.querySelectorAll('.task-item').forEach(el => {
+                const id = el.id.split('-')[1];
+                const at = parseInt(document.getElementById(`at-${id}`).value);
+                const bt = parseInt(document.getElementById(`bt-${id}`).value);
+                if (!isNaN(at) && !isNaN(bt)) {
+                    p.push({ id: `P${id}`, num: parseInt(id), arrival: at, burst: bt, remaining: bt });
+                }
+            });
+            return p;
+        }
+
+        // ===== Execution =====
+        async function startCore() {
+            const procs = getProcs();
+            if (procs.length === 0) return;
+
+            let res;
+            if (currentAlgo === 'fcfs') res = runFCFS(procs);
+            else if (currentAlgo === 'sjf') res = runSJF(procs);
+            else if (currentAlgo === 'srtf') res = runSRTF(procs);
+            else if (currentAlgo === 'rr') res = runRR(procs, parseInt(document.getElementById('time-quantum').value) || 2);
+
+            await renderCore(res);
+        }
+
+        function runFCFS(procs) {
+            const s = [...procs].sort((a, b) => a.arrival - b.arrival || a.num - b.num);
+            let time = 0, gantt = [], results = [], logs = [];
+            s.forEach(p => {
+                if (time < p.arrival) { gantt.push({ id: 'Idle', start: time, end: p.arrival }); time = p.arrival; }
+                const start = time;
+                time += p.burst;
+                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
+                gantt.push({ id: p.id, start, end: time });
+                logs.push({ time: start, msg: `CORE: Processing ${p.id}.` });
+            });
+            return { results, gantt, logs };
+        }
+
+        function runSJF(procs) {
+            let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
+            while (results.length < procs.length) {
+                let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
+                if (ready.length === 0) {
+                    let next = Math.min(...remaining.map(p => p.arrival));
+                    gantt.push({ id: 'Idle', start: time, end: next });
+                    time = next;
+                    continue;
+                }
+                let p = ready[0];
+                const start = time;
+                time += p.burst;
+                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
+                gantt.push({ id: p.id, start, end: time });
+                logs.push({ time: start, msg: `SJF-NP: Selecting ${p.id} (Shortest).` });
+                remaining = remaining.filter(r => r.id !== p.id);
+            }
+            return { results, gantt, logs };
+        }
+
+        function runSRTF(procs) {
+            let time = 0, results = [], gantt = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
+            let lastId = null, bStart = 0;
+            while (results.length < procs.length) {
+                let ready = remaining.filter(p => p.arrival <= time && p.remaining > 0).sort((a, b) => a.remaining - b.remaining || a.arrival - b.arrival);
+                if (ready.length === 0) {
+                    if (lastId) { gantt.push({ id: lastId, start: bStart, end: time }); lastId = null; }
+                    let next = Math.min(...remaining.filter(p => p.remaining > 0).map(p => p.arrival));
+                    gantt.push({ id: 'Idle', start: time, end: next });
+                    time = next;
+                    continue;
+                }
+                let curr = ready[0];
+                if (curr.firstStart === -1) curr.firstStart = time;
+
+                if (lastId && lastId !== curr.id) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    logs.push({ time, msg: `SRTF: ${curr.id} Preempted ${lastId}.` });
+                    bStart = time;
+                } else if (!lastId) bStart = time;
+
+                curr.remaining--;
+                time++;
+                lastId = curr.id;
+
+                if (curr.remaining === 0) {
+                    results.push({
+                        ...curr,
+                        completion: time,
+                        tat: time - curr.arrival,
+                        wt: time - curr.arrival - curr.burst,
+                        rt: curr.firstStart - curr.arrival
+                    });
+                    gantt.push({ id: curr.id, start: bStart, end: time });
+                    logs.push({ time, msg: `SRTF: ${curr.id} Complete.` });
+                    lastId = null;
+                    remaining = remaining.filter(p => p.id !== curr.id);
+                }
+            }
+            return { results, gantt, logs };
+        }
+
+        function runRR(procs, q) {
+            let time = 0, results = [], gantt = [], logs = [], queue = [], remaining = procs.map(p => ({ ...p })).sort((a, b) => a.arrival - b.arrival);
+            let i = 0;
+            while (results.length < procs.length) {
+                while (i < remaining.length && remaining[i].arrival <= time) { queue.push(remaining[i]); i++; }
+                if (queue.length === 0) {
+                    gantt.push({ id: 'Idle', start: time, end: remaining[i].arrival });
+                    time = remaining[i].arrival;
+                    continue;
+                }
+                let p = queue.shift();
+                let slice = Math.min(p.remaining, q);
+                const start = time;
+                p.remaining -= slice;
+                time += slice;
+                while (i < remaining.length && remaining[i].arrival <= time) { queue.push(remaining[i]); i++; }
+                gantt.push({ id: p.id, start, end: time });
+                logs.push({ time: start, msg: `RR: ${p.id} executed for ${slice}ms.` });
+                if (p.remaining > 0) queue.push(p);
+                else results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
+            }
+            return { results, gantt, logs };
+        }
+
+        // ===== Rendering =====
+        async function renderCore(res) {
+            const track = document.getElementById('gantt-track');
+            const logs = document.getElementById('log-list');
+            const body = document.getElementById('matrix-body');
+
+            track.innerHTML = '';
+            logs.innerHTML = '';
+            body.innerHTML = '';
+
+            const lastEnd = res.gantt[res.gantt.length - 1].end;
+            animateN('stat-tat', res.results.reduce((a, b) => a + b.tat, 0) / res.results.length);
+            animateN('stat-wt', res.results.reduce((a, b) => a + b.wt, 0) / res.results.length);
+            animateN('stat-ct', lastEnd);
+
+            const legend = document.getElementById('gantt-legend');
+            legend.innerHTML = '';
+            res.results.forEach(r => {
+                const item = document.createElement('div');
+                item.style.display = 'flex';
+                item.style.alignItems = 'center';
+                item.style.gap = '8px';
+                item.style.fontSize = '0.9rem';
+                item.style.fontWeight = '800';
+                const dot = document.createElement('div');
+                dot.style.width = '12px';
+                dot.style.height = '12px';
+                dot.style.borderRadius = '3px';
+                dot.style.background = colors[parseInt(r.id.substring(1)) % colors.length];
+                item.appendChild(dot);
+                item.innerHTML += `<span style="color:#fff">${r.id}</span>`;
+                legend.appendChild(item);
+            });
+
+            for (let i = 0; i < res.gantt.length; i++) {
+                const b = res.gantt[i];
+                const w = ((b.end - b.start) / lastEnd) * 100;
+
+                const div = document.createElement('div');
+                div.className = 'gantt-node';
+                div.style.width = '0%';
+                div.style.background = b.id === 'Idle' ? '#334155' : colors[parseInt(b.id.substring(1)) % colors.length];
+                div.innerHTML = `<span style="z-index:5">${b.id !== 'Idle' ? b.id : ''}</span>`;
+
+                // START MARKER (0) - only for the first block
+                if (i === 0) {
+                    const sMark = document.createElement('div');
+                    sMark.className = 'time-label start-marker';
+                    sMark.innerText = b.start;
+                    div.appendChild(sMark);
+                }
+
+                // END MARKER (Completion Time) - for every block
+                const eMark = document.createElement('div');
+                eMark.className = 'time-label end-marker';
+                eMark.innerText = b.end;
+                div.appendChild(eMark);
+
+                track.appendChild(div);
+
+                const log = res.logs.find(l => l.time === b.start);
+                if (log) {
+                    const entry = document.createElement('div');
+                    entry.innerHTML = `<span style="color:var(--text-label)">[${log.time}ms]</span> ${log.msg}`;
+                    logs.appendChild(entry);
+                    logs.scrollTop = logs.scrollHeight;
+                }
+
+                await gsap.to(div, { width: `${w}%`, duration: 0.3, ease: "power2.out" });
+            }
+            res.results.sort((a, b) => parseInt(a.id.substring(1)) - parseInt(b.id.substring(1)));
+
+            res.results.forEach(r => {
+                const tr = document.createElement('tr');
+                const rowColor = colors[parseInt(r.id.substring(1)) % colors.length];
+                tr.style.borderLeft = `4px solid ${rowColor}`;
+                tr.innerHTML = `
+                    <td style="color:${rowColor}; font-weight:900">${r.id}</td>
+                    <td style="color:#ffffff; font-weight:700">${r.arrival}</td>
+                    <td style="color:#ffffff; font-weight:700">${r.burst}</td>
+                    <td style="color:#ffffff; font-weight:700">${r.completion}</td>
+                    <td style="color:#ffffff; font-weight:700">${r.tat}</td>
+                    <td style="color:#ffffff; font-weight:700">${r.wt}</td>
+                    <td style="color:#22d3ee; font-weight:900">${r.rt || 0}</td>
+                `;
+                body.appendChild(tr);
+                gsap.from(tr, { opacity: 0, x: 10, duration: 0.25 });
+            });
+        }
+
+        function animateN(id, val) {
+            const o = { n: 0 };
+            gsap.to(o, { n: val, duration: 1, onUpdate: () => document.getElementById(id).innerText = o.n.toFixed(1) });
+        }
+
+        function addSample() {
+            document.getElementById('task-list').innerHTML = '';
+            // Generate 4 to 6 random processes
+            const count = Math.floor(Math.random() * 3) + 4;
+            const samples = [];
+            for (let i = 0; i < count; i++) {
+                samples.push({
+                    a: Math.floor(Math.random() * 11), // Arrival 0-10
+                    b: Math.floor(Math.random() * 10) + 2 // Burst 2-11
+                });
+            }
+            // Sort by arrival for a cleaner initial view
+            samples.sort((a, b) => a.a - b.a);
+            samples.forEach(s => addProcess(s.a, s.b));
+        }
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' +
+                now.getMinutes().toString().padStart(2, '0') + ':' +
+                now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('digital-clock').innerText = timeStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
