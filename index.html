@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXUS OS | Processor Command Center</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2322d3ee' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='4' width='16' height='16' rx='2'/><rect x='9' y='9' width='6' height='6'/><path d='M15 2v2'/><path d='M15 20v2'/><path d='M2 15h2'/><path d='M2 9h2'/><path d='M20 15h2'/><path d='M20 9h2'/><path d='M9 2v2'/><path d='M9 20v2'/></svg>">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='c' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2322d3ee'/%3E%3Cstop offset='100%25' stop-color='%230891b2'/%3E%3C/linearGradient%3E%3ClinearGradient id='p' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='100%25' stop-color='%237e22ce'/%3E%3C/linearGradient%3E%3ClinearGradient id='r' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fb7185'/%3E%3Cstop offset='100%25' stop-color='%23be123c'/%3E%3C/linearGradient%3E%3ClinearGradient id='y' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3Cfilter id='g' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='2.5' result='blur'/%3E%3CfeComposite in='SourceGraphic' in2='blur' operator='over'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='%23000' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M 50,12 A 38,38 0 0,1 88,50' fill='none' stroke='url(%23c)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 88,50 A 38,38 0 0,1 50,88' fill='none' stroke='url(%23p)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 50,88 A 38,38 0 0,1 12,50' fill='none' stroke='url(%23r)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 12,50 A 38,38 0 0,1 50,12' fill='none' stroke='url(%23y)' stroke-dasharray='4 3' stroke-width='2' stroke-linecap='round' opacity='0.8'/%3E%3Crect x='28' y='28' width='44' height='44' rx='6' fill='%230b0f19' stroke='url(%23c)' stroke-width='2' filter='url(%23g)'/%3E%3Cg stroke='%2322d3ee' stroke-width='1.5' stroke-linecap='round'%3E%3Cline x1='38' y1='28' x2='38' y2='23'/%3E%3Cline x1='50' y1='28' x2='50' y2='21'/%3E%3Cline x1='62' y1='28' x2='62' y2='23'/%3E%3Cline x1='38' y1='72' x2='38' y2='77'/%3E%3Cline x1='50' y1='72' x2='50' y2='79'/%3E%3Cline x1='62' y1='72' x2='62' y2='77'/%3E%3Cline x1='28' y1='38' x2='23' y2='38'/%3E%3Cline x1='28' y1='50' x2='21' y2='50'/%3E%3Cline x1='28' y1='62' x2='23' y2='62'/%3E%3Cline x1='72' y1='38' x2='77' y2='38'/%3E%3Cline x1='72' y1='50' x2='79' y2='50'/%3E%3Cline x1='72' y1='62' x2='77' y2='62'/%3E%3C/g%3E%3Crect x='36' y='36' width='28' height='28' rx='3' fill='%230f172a' stroke='url(%23p)' stroke-width='1.5'/%3E%3Cpath d='M 40,50 L 44,50 L 47,41 L 50,59 L 53,46 L 56,50 L 60,50' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' filter='url(%23g)'/%3E%3Ccircle cx='50' cy='12' r='3.5' fill='%2322d3ee' filter='url(%23g)'/%3E%3Ccircle cx='88' cy='50' r='3.5' fill='%23a855f7' filter='url(%23g)'/%3E%3Ccircle cx='50' cy='88' r='3.5' fill='%23fb7185' filter='url(%23g)'/%3E%3Ccircle cx='12' cy='50' r='3' fill='%23fbbf24'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -202,6 +201,28 @@
             margin-bottom: 10px;
             align-items: center;
             border: 1px solid #334155;
+        }
+
+        .task-item.has-priority {
+            grid-template-columns: 40px 1fr 1fr 1fr 40px;
+        }
+
+        .task-header {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr 40px;
+            gap: 12px;
+            padding: 0 10px 8px 10px;
+            font-family: 'JetBrains Mono';
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-label);
+            text-transform: uppercase;
+            border-bottom: 1px solid #334155;
+            margin-bottom: 12px;
+        }
+
+        .task-header.has-priority {
+            grid-template-columns: 40px 1fr 1fr 1fr 40px;
         }
 
         .num-input {
@@ -439,6 +460,67 @@
             background: #334155;
             border-radius: 10px;
         }
+
+        @media (max-width: 1024px) {
+            .dash-container {
+                grid-template-columns: 1fr;
+            }
+            .w-4, .w-8, .w-6 {
+                grid-column: span 12;
+            }
+            .control-dock {
+                position: fixed;
+                bottom: 15px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                width: calc(100% - 20px);
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+                padding: 10px;
+                border-radius: 12px;
+            }
+            .dock-separator {
+                display: none;
+            }
+            .btn-action {
+                min-width: 75px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            .btn-action.run {
+                min-width: 100%;
+                margin-top: 5px;
+            }
+            body {
+                padding-bottom: 220px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px 20px;
+                align-items: center;
+            }
+            .dash-container {
+                padding: 0 15px;
+            }
+            .panel {
+                padding: 15px;
+            }
+            .big-stat value {
+                font-size: 2.2rem;
+            }
+            .btn-action {
+                flex: 1 1 30%;
+            }
+            .btn-action.run {
+                flex: 1 1 100%;
+            }
+        }
     </style>
 </head>
 
@@ -446,9 +528,8 @@
 
     <header class="header">
         <div class="logo">
-            <lord-icon src="https://cdn.lordicon.com/jlvovmue.json" trigger="loop"
-                colors="primary:#fff,secondary:#22d3ee" style="width:32px;height:32px"></lord-icon>
-            CPU SCHEDULER
+            <img src="logo.svg" alt="NEXUS OS Logo" style="width:36px; height:36px; filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));">
+            NEXUS OS
         </div>
         <div class="system-status">
             <div class="status-badge">
@@ -465,6 +546,13 @@
             <div class="panel-header">
                 <span>Processor Input</span>
                 <span style="color:var(--accent)">STEP 01</span>
+            </div>
+            <div id="task-header" class="task-header">
+                <div style="font-weight:900; color:var(--text-label);">PID</div>
+                <div>AT</div>
+                <div>BT</div>
+                <div id="hdr-priority" style="display:none; color:var(--cyan);">PRI</div>
+                <div></div>
             </div>
             <div id="task-list" class="task-list"></div>
             <div style="margin-top:24px; display:flex; gap:12px;">
@@ -536,6 +624,7 @@
                             <th>PID</th>
                             <th>AT</th>
                             <th>BT</th>
+                            <th id="th-priority" style="display:none; color:var(--cyan) !important;">PRI</th>
                             <th>CT</th>
                             <th>TAT</th>
                             <th>WT</th>
@@ -564,6 +653,9 @@
                 data-lucide="bar-chart-2"></i>SJF-NP</button>
         <button class="btn-action" id="btn-srtf" onclick="selectAlgo('srtf')"><i data-lucide="zap"></i>SRTF-P</button>
         <button class="btn-action" id="btn-rr" onclick="selectAlgo('rr')"><i data-lucide="refresh-cw"></i>RR</button>
+        <button class="btn-action" id="btn-priority-np" onclick="selectAlgo('priority-np')"><i data-lucide="sliders"></i>PRI-NP</button>
+        <button class="btn-action" id="btn-priority-p" onclick="selectAlgo('priority-p')"><i data-lucide="shield-alert"></i>PRI-P</button>
+        <button class="btn-action" id="btn-ljf" onclick="selectAlgo('ljf')"><i data-lucide="align-left"></i>LJF</button>
 
         <div class="dock-separator"></div>
 
@@ -590,21 +682,45 @@
             document.querySelectorAll('.btn-action').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-${algo}`).classList.add('active');
             document.getElementById('rr-config').style.display = algo === 'rr' ? 'block' : 'none';
+
+            const isPriority = algo.startsWith('priority');
+            document.getElementById('th-priority').style.display = isPriority ? 'table-cell' : 'none';
+            document.getElementById('hdr-priority').style.display = isPriority ? 'block' : 'none';
+            
+            const taskHeader = document.getElementById('task-header');
+            if (isPriority) {
+                taskHeader.classList.add('has-priority');
+            } else {
+                taskHeader.classList.remove('has-priority');
+            }
+
+            document.querySelectorAll('.priority-input').forEach(el => {
+                el.style.display = isPriority ? 'block' : 'none';
+            });
+            document.querySelectorAll('.task-item').forEach(el => {
+                if (isPriority) {
+                    el.classList.add('has-priority');
+                } else {
+                    el.classList.remove('has-priority');
+                }
+            });
         }
 
-        function addProcess(at = '', bt = '') {
+        function addProcess(at = '', bt = '', pri = '1') {
             const existing = Array.from(document.querySelectorAll('.task-item')).map(el => parseInt(el.id.replace('row-', '')));
             let n = 1;
             while (existing.includes(n)) n++;
 
             const list = document.getElementById('task-list');
             const div = document.createElement('div');
-            div.className = 'task-item';
+            const isPriority = currentAlgo.startsWith('priority');
+            div.className = `task-item ${isPriority ? 'has-priority' : ''}`;
             div.id = `row-${n}`;
             div.innerHTML = `
         <div style="font-weight:900; color:var(--accent); font-size:1.1rem;">P${n}</div>
         <input type="number" id="at-${n}" value="${at}" placeholder="AT" class="num-input" autocomplete="off">
         <input type="number" id="bt-${n}" value="${bt}" placeholder="BT" class="num-input" autocomplete="off">
+        <input type="number" id="pri-${n}" value="${pri}" placeholder="PRI" class="num-input priority-input" style="display: ${isPriority ? 'block' : 'none'};" autocomplete="off">
         <button onclick="removeProcess(${n})" style="background:none; border:none; color:var(--rose); cursor:pointer;"><i data-lucide="trash-2" style="width:20px"></i></button>
     `;
             list.appendChild(div);
@@ -623,8 +739,10 @@
                 const id = el.id.split('-')[1];
                 const at = parseInt(document.getElementById(`at-${id}`).value);
                 const bt = parseInt(document.getElementById(`bt-${id}`).value);
+                const priEl = document.getElementById(`pri-${id}`);
+                const pri = priEl ? (parseInt(priEl.value) || 0) : 1;
                 if (!isNaN(at) && !isNaN(bt)) {
-                    p.push({ id: `P${id}`, num: parseInt(id), arrival: at, burst: bt, remaining: bt });
+                    p.push({ id: `P${id}`, num: parseInt(id), arrival: at, burst: bt, remaining: bt, priority: pri });
                 }
             });
             return p;
@@ -640,6 +758,9 @@
             else if (currentAlgo === 'sjf') res = runSJF(procs);
             else if (currentAlgo === 'srtf') res = runSRTF(procs);
             else if (currentAlgo === 'rr') res = runRR(procs, parseInt(document.getElementById('time-quantum').value) || 2);
+            else if (currentAlgo === 'priority-np') res = runPriorityNP(procs);
+            else if (currentAlgo === 'priority-p') res = runPriorityP(procs);
+            else if (currentAlgo === 'ljf') res = runLJF(procs);
 
             await renderCore(res);
         }
@@ -745,6 +866,93 @@
             return { results, gantt, logs };
         }
 
+        function runPriorityNP(procs) {
+            let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
+            logs.push({ time: 0, msg: `SYSTEM: Priority NP initialized (Lower number = Higher Priority).` });
+            while (results.length < procs.length) {
+                let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => a.priority - b.priority || a.arrival - b.arrival || a.num - b.num);
+                if (ready.length === 0) {
+                    let next = Math.min(...remaining.map(p => p.arrival));
+                    gantt.push({ id: 'Idle', start: time, end: next });
+                    time = next;
+                    continue;
+                }
+                let p = ready[0];
+                const start = time;
+                time += p.burst;
+                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
+                gantt.push({ id: p.id, start, end: time });
+                logs.push({ time: start, msg: `PRI-NP: Selecting ${p.id} (Priority: ${p.priority}).` });
+                remaining = remaining.filter(r => r.id !== p.id);
+            }
+            return { results, gantt, logs };
+        }
+
+        function runPriorityP(procs) {
+            let time = 0, results = [], gantt = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
+            let lastId = null, bStart = 0;
+            logs.push({ time: 0, msg: `SYSTEM: Priority Preemptive initialized.` });
+            while (results.length < procs.length) {
+                let ready = remaining.filter(p => p.arrival <= time && p.remaining > 0).sort((a, b) => a.priority - b.priority || a.arrival - b.arrival || a.num - b.num);
+                if (ready.length === 0) {
+                    if (lastId) { gantt.push({ id: lastId, start: bStart, end: time }); lastId = null; }
+                    let next = Math.min(...remaining.filter(p => p.remaining > 0).map(p => p.arrival));
+                    gantt.push({ id: 'Idle', start: time, end: next });
+                    time = next;
+                    continue;
+                }
+                let curr = ready[0];
+                if (curr.firstStart === -1) curr.firstStart = time;
+
+                if (lastId && lastId !== curr.id) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    logs.push({ time, msg: `PRI-P: ${curr.id} (Priority: ${curr.priority}) Preempted ${lastId}.` });
+                    bStart = time;
+                } else if (!lastId) bStart = time;
+
+                curr.remaining--;
+                time++;
+                lastId = curr.id;
+
+                if (curr.remaining === 0) {
+                    results.push({
+                        ...curr,
+                        completion: time,
+                        tat: time - curr.arrival,
+                        wt: time - curr.arrival - curr.burst,
+                        rt: curr.firstStart - curr.arrival
+                    });
+                    gantt.push({ id: curr.id, start: bStart, end: time });
+                    logs.push({ time, msg: `PRI-P: ${curr.id} Complete.` });
+                    lastId = null;
+                    remaining = remaining.filter(p => p.id !== curr.id);
+                }
+            }
+            return { results, gantt, logs };
+        }
+
+        function runLJF(procs) {
+            let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
+            logs.push({ time: 0, msg: `SYSTEM: LJF Non-Preemptive initialized.` });
+            while (results.length < procs.length) {
+                let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => b.burst - a.burst || a.arrival - b.arrival || a.num - b.num);
+                if (ready.length === 0) {
+                    let next = Math.min(...remaining.map(p => p.arrival));
+                    gantt.push({ id: 'Idle', start: time, end: next });
+                    time = next;
+                    continue;
+                }
+                let p = ready[0];
+                const start = time;
+                time += p.burst;
+                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
+                gantt.push({ id: p.id, start, end: time });
+                logs.push({ time: start, msg: `LJF: Selecting ${p.id} (Burst: ${p.burst}).` });
+                remaining = remaining.filter(r => r.id !== p.id);
+            }
+            return { results, gantt, logs };
+        }
+
         // ===== Rendering =====
         async function renderCore(res) {
             const track = document.getElementById('gantt-track');
@@ -817,6 +1025,7 @@
             }
             res.results.sort((a, b) => parseInt(a.id.substring(1)) - parseInt(b.id.substring(1)));
 
+            const isPriority = currentAlgo.startsWith('priority');
             res.results.forEach(r => {
                 const tr = document.createElement('tr');
                 const rowColor = colors[parseInt(r.id.substring(1)) % colors.length];
@@ -825,6 +1034,7 @@
                     <td style="color:${rowColor}; font-weight:900">${r.id}</td>
                     <td style="color:#ffffff; font-weight:700">${r.arrival}</td>
                     <td style="color:#ffffff; font-weight:700">${r.burst}</td>
+                    ${isPriority ? `<td style="color:#fbbf24; font-weight:900">${r.priority}</td>` : ''}
                     <td style="color:#ffffff; font-weight:700">${r.completion}</td>
                     <td style="color:#ffffff; font-weight:700">${r.tat}</td>
                     <td style="color:#ffffff; font-weight:700">${r.wt}</td>
@@ -848,12 +1058,13 @@
             for (let i = 0; i < count; i++) {
                 samples.push({
                     a: Math.floor(Math.random() * 11), // Arrival 0-10
-                    b: Math.floor(Math.random() * 10) + 2 // Burst 2-11
+                    b: Math.floor(Math.random() * 10) + 2, // Burst 2-11
+                    p: Math.floor(Math.random() * 5) + 1 // Priority 1-5
                 });
             }
             // Sort by arrival for a cleaner initial view
             samples.sort((a, b) => a.a - b.a);
-            samples.forEach(s => addProcess(s.a, s.b));
+            samples.forEach(s => addProcess(s.a, s.b, s.p));
         }
         function updateClock() {
             const now = new Date();
