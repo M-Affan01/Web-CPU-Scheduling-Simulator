@@ -1,13 +1,17 @@
-# CPU SCHEDULER
+<h1>CPU Schedular</h1>
+<p><b>Futuristic Processor Command Center & CPU Scheduler Simulator</b></p>
 
-[![Version](https://img.shields.io/badge/version-10.0.0-blue.svg)](https://github.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Status](https://img.shields.io/badge/status-production--ready-green.svg)]()
-[![Platform](https://img.shields.io/badge/platform-web-lightgrey.svg)]()
-[![Built With](https://img.shields.io/badge/built%20with-Vanilla%20JS-F7DF1E.svg)]()
-[![Animation](https://img.shields.io/badge/animation-GSAP-88CE02.svg)](https://greensock.com/gsap/)
+<p>
+  <a href="https://github.com/"><img src="https://img.shields.io/badge/version-10.0.0-blue.svg" alt="Version"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/status-production--ready-green.svg" alt="Status">
+  <img src="https://img.shields.io/badge/platform-web-lightgrey.svg" alt="Platform">
+  <img src="https://img.shields.io/badge/built%20with-Vanilla%20JS-F7DF1E.svg" alt="Built With">
+  <a href="https://greensock.com/gsap/"><img src="https://img.shields.io/badge/animation-GSAP-88CE02.svg" alt="Animation"></a>
+</p>
 
-**CPU SCHEDULER** is a production-grade, high-fidelity simulation environment designed for the precise visualization and mathematical modeling of CPU scheduling algorithms. Built with a focus on maximum clarity and professional-grade analytics, it provides an interactive platform for academic research and operating system logic verification.
+**NEXUS OS (CPU SCHEDULER)** is a production-grade, high-fidelity simulation environment designed for the precise visualization and mathematical modeling of CPU scheduling algorithms. Built with a focus on maximum clarity, rich aesthetics, and professional-grade analytics, it provides an interactive platform for academic research and operating system logic verification.
+
 
 ---
 
@@ -36,9 +40,25 @@ Whether you are a student mastering **Shortest Remaining Time First (SRTF)** or 
 *   **Kernel Feedback**: Professional logs detailing exactly why a specific process was selected.
 
 ### 4. Advanced Logic Engine
-*   **SRTF (SJF Preemptive)**: Implements 1-unit time stepping and FCFS tie-breaking.
-*   **Round Robin (RR)**: Adjustable Time Quantum with precise context-switching modeling.
+*   **7 Integrated Algorithms**: Fully functional implementations covering preemptive, non-preemptive, criteria-based, and priority-based strategies.
 *   **Intelligent PID Management**: Dynamic ID reuse—deleted process IDs are automatically reassigned to maintain a clean sequence.
+
+---
+
+## Supported Scheduling Algorithms
+
+NEXUS OS is equipped with 7 core scheduling algorithms, allowing side-by-side behavioral comparison and timing verification:
+
+| Algorithm | Type | Selection Criteria | Description & Tie-Breaking |
+| :--- | :--- | :--- | :--- |
+| **FCFS** <br>*(First-Come, First-Served)* | Non-Preemptive | Arrival Time (AT) | Processes are dispatched in the exact order of their arrival. Ties are broken by lower Process ID (PID). |
+| **SJF-NP** <br>*(Shortest Job First)* | Non-Preemptive | Burst Time (BT) | Selects the process with the smallest CPU burst time among ready tasks. Ties are broken by earlier AT, then PID. |
+| **SRTF-P** <br>*(Shortest Remaining Time First)* | Preemptive | Remaining Burst Time | Preemptive version of SJF. If a new process arrives with a shorter remaining burst than the running task, it preempts the CPU. |
+| **RR** <br>*(Round Robin)* | Preemptive | Time Quantum slice | Each process gets a fixed time slot (quantum) in a cyclic queue. Outstanding processes are pushed to the back of the queue. |
+| **PRI-NP** <br>*(Priority Scheduling)* | Non-Preemptive | Priority Level | Dispatches the task with the highest priority level (user-configured). Ties are resolved using Arrival Time. |
+| **PRI-P** <br>*(Priority Scheduling)* | Preemptive | Priority Level | Preemptive version of Priority. High priority arrivals immediately preempt a running lower-priority task. |
+| **LJF** <br>*(Longest Job First)* | Non-Preemptive | Longest Burst Time | Intended for processing massive tasks first. Selects the process with the largest burst time. |
+
 
 ---
 
@@ -138,7 +158,6 @@ nexus-cpu-scheduler/
 
 ## Future Roadmap
 
-*   [ ] **Priority Scheduling**: Support for Preemptive and Non-Preemptive priority levels.
 *   [ ] **Data Export**: Export the Performance Matrix to PDF or CSV for academic reporting.
 *   [ ] **Multi-Core Simulation**: Parallel Gantt tracks for multi-processor environment modeling.
 *   [ ] **Persistent Batches**: LocalStorage support to save custom test scenarios.
