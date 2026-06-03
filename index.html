@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS OS | Processor Command Center</title>
+    <title>NEXUS OS </title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='c' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2322d3ee'/%3E%3Cstop offset='100%25' stop-color='%230891b2'/%3E%3C/linearGradient%3E%3ClinearGradient id='p' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='100%25' stop-color='%237e22ce'/%3E%3C/linearGradient%3E%3ClinearGradient id='r' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fb7185'/%3E%3Cstop offset='100%25' stop-color='%23be123c'/%3E%3C/linearGradient%3E%3ClinearGradient id='y' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3Cfilter id='g' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='2.5' result='blur'/%3E%3CfeComposite in='SourceGraphic' in2='blur' operator='over'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='%23000' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M 50,12 A 38,38 0 0,1 88,50' fill='none' stroke='url(%23c)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 88,50 A 38,38 0 0,1 50,88' fill='none' stroke='url(%23p)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 50,88 A 38,38 0 0,1 12,50' fill='none' stroke='url(%23r)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 12,50 A 38,38 0 0,1 50,12' fill='none' stroke='url(%23y)' stroke-dasharray='4 3' stroke-width='2' stroke-linecap='round' opacity='0.8'/%3E%3Crect x='28' y='28' width='44' height='44' rx='6' fill='%230b0f19' stroke='url(%23c)' stroke-width='2' filter='url(%23g)'/%3E%3Cg stroke='%2322d3ee' stroke-width='1.5' stroke-linecap='round'%3E%3Cline x1='38' y1='28' x2='38' y2='23'/%3E%3Cline x1='50' y1='28' x2='50' y2='21'/%3E%3Cline x1='62' y1='28' x2='62' y2='23'/%3E%3Cline x1='38' y1='72' x2='38' y2='77'/%3E%3Cline x1='50' y1='72' x2='50' y2='79'/%3E%3Cline x1='62' y1='72' x2='62' y2='77'/%3E%3Cline x1='28' y1='38' x2='23' y2='38'/%3E%3Cline x1='28' y1='50' x2='21' y2='50'/%3E%3Cline x1='28' y1='62' x2='23' y2='62'/%3E%3Cline x1='72' y1='38' x2='77' y2='38'/%3E%3Cline x1='72' y1='50' x2='79' y2='50'/%3E%3Cline x1='72' y1='62' x2='77' y2='62'/%3E%3C/g%3E%3Crect x='36' y='36' width='28' height='28' rx='3' fill='%230f172a' stroke='url(%23p)' stroke-width='1.5'/%3E%3Cpath d='M 40,50 L 44,50 L 47,41 L 50,59 L 53,46 L 56,50 L 60,50' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' filter='url(%23g)'/%3E%3Ccircle cx='50' cy='12' r='3.5' fill='%2322d3ee' filter='url(%23g)'/%3E%3Ccircle cx='88' cy='50' r='3.5' fill='%23a855f7' filter='url(%23g)'/%3E%3Ccircle cx='50' cy='88' r='3.5' fill='%23fb7185' filter='url(%23g)'/%3E%3Ccircle cx='12' cy='50' r='3' fill='%23fbbf24'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -375,26 +375,97 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Dock System - Compact & Professional */
+        /* App Layout */
+        .app-layout {
+            display: flex;
+            width: 100%;
+            min-height: calc(100vh - 68px);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 290px;
+            width: calc(100% - 290px);
+            padding: 10px 0 50px 0;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: var(--cyan);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-bottom: 1.5px solid #334155;
+            padding-bottom: 8px;
+            text-align: center;
+        }
+
+        .algo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        /* Sidebar Command Center - Premium Design */
         .control-dock {
             position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.95);
-            border: 1px solid #334155;
-            padding: 10px;
-            border-radius: 14px;
+            top: 68px;
+            left: 0;
+            bottom: 0;
+            width: 290px;
+            background: rgba(8, 8, 8, 0.98);
+            border: none;
+            border-right: 2px solid #334155;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 12px;
+            box-shadow: 5px 0 35px rgba(0, 0, 0, 0.95);
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-layout.collapsed .control-dock {
+            transform: translateX(-290px);
+        }
+
+        .app-layout.collapsed .main-content {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        #sidebar-toggle {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
-            z-index: 1001;
-            backdrop-filter: blur(8px);
+            justify-content: center;
+            padding: 8px;
+            margin-right: 12px;
+            border-radius: 6px;
+            transition: 0.2s ease;
+        }
+
+        #sidebar-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        #sidebar-toggle i {
+            width: 20px;
+            height: 20px;
         }
 
         .btn-action {
-            padding: 8px 18px;
+            padding: 12px 16px;
             border-radius: 8px;
             border: 1.2px solid #334155;
             background: transparent;
@@ -402,31 +473,33 @@
             font-weight: 700;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            min-width: 85px;
-            gap: 4px;
+            justify-content: flex-start;
+            width: 100%;
+            min-width: unset;
+            gap: 12px;
         }
 
         .btn-action i {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
         }
 
         .btn-action:hover {
             border-color: #fff;
             color: #fff;
             background: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
         }
 
         .btn-action.active {
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+            box-shadow: 0 0 18px rgba(168, 85, 247, 0.45);
         }
 
         .btn-action.run {
@@ -434,9 +507,13 @@
             color: #000;
             border-color: var(--cyan);
             font-weight: 900;
-            min-width: 120px;
+            width: 100%;
+            justify-content: center;
             flex-direction: row;
             gap: 8px;
+            padding: 14px;
+            margin-top: auto;
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
         }
 
         .btn-action.run:hover {
@@ -445,11 +522,40 @@
             transform: scale(1.02);
         }
 
+        .btn-run-core {
+            background: var(--cyan);
+            color: #000;
+            border: 1.2px solid var(--cyan);
+            border-radius: 8px;
+            font-weight: 900;
+            padding: 8px 18px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+            white-space: nowrap;
+        }
+
+        .btn-run-core i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-run-core:hover {
+            background: #fff;
+            border-color: #fff;
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
         .dock-separator {
-            width: 1px;
-            height: 30px;
+            width: 100%;
+            height: 1.5px;
             background: #334155;
-            margin: 0 5px;
+            margin: 8px 0;
         }
 
         ::-webkit-scrollbar {
@@ -462,32 +568,59 @@
         }
 
         @media (max-width: 1024px) {
-            .dash-container {
-                grid-template-columns: 1fr;
+            .app-layout {
+                flex-direction: column;
             }
-            .w-4, .w-8, .w-6 {
-                grid-column: span 12;
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 10px 0 220px 0;
+            }
+            .sidebar-title {
+                display: none;
+            }
+            #sidebar-toggle {
+                display: none !important;
+            }
+            .algo-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
             }
             .control-dock {
                 position: fixed;
                 bottom: 15px;
                 left: 10px;
                 right: 10px;
-                transform: none;
+                top: auto;
                 width: calc(100% - 20px);
+                flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 8px;
-                padding: 10px;
-                border-radius: 12px;
+                padding: 12px;
+                border-radius: 14px;
+                border: 1.5px solid #334155;
+                height: auto;
+                box-shadow: 0 10px 45px rgba(0, 0, 0, 0.95);
+                overflow-y: visible;
             }
             .dock-separator {
                 display: none;
             }
             .btn-action {
-                min-width: 75px;
-                padding: 6px 12px;
+                width: auto;
+                min-width: 85px;
+                padding: 8px 12px;
                 font-size: 0.8rem;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+            }
+            .btn-action:hover {
+                transform: none;
             }
             .btn-action.run {
                 min-width: 100%;
@@ -528,10 +661,12 @@
 
     <header class="header">
         <div class="logo">
+            <button id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
             <img src="logo.svg" alt="NEXUS OS Logo" style="width:36px; height:36px; filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));">
             NEXUS OS
         </div>
         <div class="system-status">
+            <button class="btn-run-core" onclick="startCore()"><i data-lucide="play"></i> EXECUTE CORE</button>
             <div class="status-badge">
                 <div class="pulse-red"></div>
                 SYSTEM LIVE
@@ -540,130 +675,136 @@
         </div>
     </header>
 
-    <div class="dash-container">
-        <!-- Section 1 -->
-        <div class="panel w-4">
-            <div class="panel-header">
-                <span>Processor Input</span>
-                <span style="color:var(--accent)">STEP 01</span>
+    <div class="app-layout">
+        <aside class="control-dock">
+            <div class="sidebar-title">COMMAND CORE</div>
+            <div class="algo-list">
+                <button class="btn-action active" id="btn-fcfs" onclick="selectAlgo('fcfs')"><i
+                        data-lucide="arrow-right"></i>FCFS</button>
+                <button class="btn-action" id="btn-sjf" onclick="selectAlgo('sjf')"><i
+                        data-lucide="bar-chart-2"></i>SJF-NP</button>
+                <button class="btn-action" id="btn-srtf" onclick="selectAlgo('srtf')"><i data-lucide="zap"></i>SRTF-P</button>
+                <button class="btn-action" id="btn-rr" onclick="selectAlgo('rr')"><i data-lucide="refresh-cw"></i>RR</button>
+                <button class="btn-action" id="btn-priority-np" onclick="selectAlgo('priority-np')"><i data-lucide="sliders"></i>PRI-NP</button>
+                <button class="btn-action" id="btn-priority-p" onclick="selectAlgo('priority-p')"><i data-lucide="shield-alert"></i>PRI-P</button>
+                <button class="btn-action" id="btn-ljf" onclick="selectAlgo('ljf')"><i data-lucide="align-left"></i>LJF</button>
+                <button class="btn-action" id="btn-mlq" onclick="selectAlgo('mlq')"><i data-lucide="layers"></i>MLQ</button>
+                <button class="btn-action" id="btn-mlfq" onclick="selectAlgo('mlfq')"><i data-lucide="git-branch"></i>MLFQ</button>
+                <button class="btn-action" id="btn-hrrn" onclick="selectAlgo('hrrn')"><i data-lucide="trending-up"></i>HRRN</button>
             </div>
-            <div id="task-header" class="task-header">
-                <div style="font-weight:900; color:var(--text-label);">PID</div>
-                <div>AT</div>
-                <div>BT</div>
-                <div id="hdr-priority" style="display:none; color:var(--cyan);">PRI</div>
-                <div></div>
-            </div>
-            <div id="task-list" class="task-list"></div>
-            <div style="margin-top:24px; display:flex; gap:12px;">
-                <button class="btn-action" onclick="addProcess()" style="flex:1; background:var(--surface-bright);"><i
-                        data-lucide="plus-square"></i> Add Task</button>
-                <div id="rr-config" style="display:none;">
-                    <input type="number" id="time-quantum" value="2" class="num-input" style="width:75px"
-                        title="Time Quantum">
-                </div>
-            </div>
-        </div>
 
-        <!-- Section 2 -->
-        <div class="panel w-8">
-            <div class="panel-header">
-                <span>Execution Timeline</span>
-                <span style="color:var(--cyan)">LIVE MONITORING</span>
-            </div>
-            <div class="display-area">
-                <div id="gantt-track" class="gantt-track">
-                    <div
-                        style="width:100%; display:flex; align-items:center; justify-content:center; color:var(--text-label); font-size:1.1rem; font-weight:700;">
-                        [ KERNEL AWAITING TASK FLOW ]
+            <div class="dock-separator"></div>
+
+            <button class="btn-action" onclick="addSample()"><i data-lucide="folder-open"></i>Load Sample</button>
+        </aside>
+
+        <main class="main-content">
+            <div class="dash-container">
+                <!-- Section 1 -->
+                <div class="panel w-4">
+                    <div class="panel-header">
+                        <span>Processor Input</span>
+                        <span style="color:var(--accent)">STEP 01</span>
+                    </div>
+                    <div id="task-header" class="task-header">
+                        <div style="font-weight:900; color:var(--text-label);">PID</div>
+                        <div>AT</div>
+                        <div>BT</div>
+                        <div id="hdr-priority" style="display:none; color:var(--cyan);">PRI</div>
+                        <div></div>
+                    </div>
+                    <div id="task-list" class="task-list"></div>
+                    <div style="margin-top:24px; display:flex; gap:12px;">
+                        <button class="btn-action" onclick="addProcess()" style="flex:1; background:var(--surface-bright);"><i
+                                data-lucide="plus-square"></i> Add Task</button>
+                        <div id="rr-config" style="display:none;">
+                            <input type="number" id="time-quantum" value="2" class="num-input" style="width:75px"
+                                title="Time Quantum">
+                        </div>
                     </div>
                 </div>
-                <!-- Dynamic Legend -->
-                <div id="gantt-legend"
-                    style="display:flex; gap:15px; margin-top:35px; flex-wrap:wrap; justify-content:center;"></div>
-            </div>
 
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; margin-top:25px;">
-                <div class="big-stat">
-                    <label>AVERAGE TAT</label>
-                    <value id="stat-tat">0.0</value>
+                <!-- Section 2 -->
+                <div class="panel w-8">
+                    <div class="panel-header">
+                        <span>Execution Timeline</span>
+                        <span style="color:var(--cyan)">LIVE MONITORING</span>
+                    </div>
+                    <div class="display-area">
+                        <div id="gantt-track" class="gantt-track">
+                            <div
+                                style="width:100%; display:flex; align-items:center; justify-content:center; color:var(--text-label); font-size:1.1rem; font-weight:700;">
+                                [ KERNEL AWAITING TASK FLOW ]
+                            </div>
+                        </div>
+                        <!-- Dynamic Legend -->
+                        <div id="gantt-legend"
+                            style="display:flex; gap:15px; margin-top:35px; flex-wrap:wrap; justify-content:center;"></div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; margin-top:25px;">
+                        <div class="big-stat">
+                            <label>AVERAGE TAT</label>
+                            <value id="stat-tat">0.0</value>
+                        </div>
+                        <div class="big-stat">
+                            <label>AVERAGE WT</label>
+                            <value id="stat-wt" style="color:var(--cyan)">0.0</value>
+                        </div>
+                        <div class="big-stat">
+                            <label>TOTAL CYCLES</label>
+                            <value id="stat-ct" style="color:var(--rose)">0</value>
+                        </div>
+                    </div>
                 </div>
-                <div class="big-stat">
-                    <label>AVERAGE WT</label>
-                    <value id="stat-wt" style="color:var(--cyan)">0.0</value>
+
+                <!-- Section 3 -->
+                <div class="panel w-6">
+                    <div class="panel-header">
+                        <span><i data-lucide="terminal" style="width:18px; vertical-align:middle; margin-right:8px"></i> System
+                            Console</span>
+                        <span style="color:var(--cyan); font-size:0.75rem; font-weight:800;">SYSTEM FEED</span>
+                    </div>
+                    <div class="terminal" id="log-list">
+                        <div style="color:#22d3ee !important; font-weight:700;">> Nexus OS High-Visibility Kernel Ready.</div>
+                    </div>
                 </div>
-                <div class="big-stat">
-                    <label>TOTAL CYCLES</label>
-                    <value id="stat-ct" style="color:var(--rose)">0</value>
+
+                <div class="panel w-6">
+                    <div class="panel-header">
+                        <span><i data-lucide="table" style="width:18px; vertical-align:middle; margin-right:8px"></i>
+                            Calculation Matrix</span>
+                        <span style="color:var(--rose); font-size:0.75rem; font-weight:800;">DATA MATRIX</span>
+                    </div>
+                    <div style="height:320px; overflow-y:auto;">
+                        <table class="calc-matrix">
+                            <thead>
+                                <tr>
+                                    <th>PID</th>
+                                    <th>AT</th>
+                                    <th>BT</th>
+                                    <th id="th-priority" style="display:none; color:var(--cyan) !important;">PRI</th>
+                                    <th>CT</th>
+                                    <th>TAT</th>
+                                    <th>WT</th>
+                                    <th>RT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="matrix-body">
+                                <tr>
+                                    <td colspan="7"
+                                        style="text-align:center; color:#ffffff !important; font-weight:700; font-style:italic; padding-top:120px; opacity:1 !important;">
+                                        <i data-lucide="cpu"
+                                            style="width:32px; display:block; margin:0 auto 15px; color:#22d3ee;"></i>
+                                        Waiting for execution command...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Section 3 -->
-        <div class="panel w-6">
-            <div class="panel-header">
-                <span><i data-lucide="terminal" style="width:18px; vertical-align:middle; margin-right:8px"></i> System
-                    Console</span>
-                <span style="color:var(--cyan); font-size:0.75rem; font-weight:800;">SYSTEM FEED</span>
-            </div>
-            <div class="terminal" id="log-list">
-                <div style="color:#22d3ee !important; font-weight:700;">> Nexus OS High-Visibility Kernel Ready.</div>
-            </div>
-        </div>
-
-        <div class="panel w-6">
-            <div class="panel-header">
-                <span><i data-lucide="table" style="width:18px; vertical-align:middle; margin-right:8px"></i>
-                    Calculation Matrix</span>
-                <span style="color:var(--rose); font-size:0.75rem; font-weight:800;">DATA MATRIX</span>
-            </div>
-            <div style="height:320px; overflow-y:auto;">
-                <table class="calc-matrix">
-                    <thead>
-                        <tr>
-                            <th>PID</th>
-                            <th>AT</th>
-                            <th>BT</th>
-                            <th id="th-priority" style="display:none; color:var(--cyan) !important;">PRI</th>
-                            <th>CT</th>
-                            <th>TAT</th>
-                            <th>WT</th>
-                            <th>RT</th>
-                        </tr>
-                    </thead>
-                    <tbody id="matrix-body">
-                        <tr>
-                            <td colspan="7"
-                                style="text-align:center; color:#ffffff !important; font-weight:700; font-style:italic; padding-top:120px; opacity:1 !important;">
-                                <i data-lucide="cpu"
-                                    style="width:32px; display:block; margin:0 auto 15px; color:#22d3ee;"></i>
-                                Waiting for execution command...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="control-dock">
-        <button class="btn-action active" id="btn-fcfs" onclick="selectAlgo('fcfs')"><i
-                data-lucide="arrow-right"></i>FCFS</button>
-        <button class="btn-action" id="btn-sjf" onclick="selectAlgo('sjf')"><i
-                data-lucide="bar-chart-2"></i>SJF-NP</button>
-        <button class="btn-action" id="btn-srtf" onclick="selectAlgo('srtf')"><i data-lucide="zap"></i>SRTF-P</button>
-        <button class="btn-action" id="btn-rr" onclick="selectAlgo('rr')"><i data-lucide="refresh-cw"></i>RR</button>
-        <button class="btn-action" id="btn-priority-np" onclick="selectAlgo('priority-np')"><i data-lucide="sliders"></i>PRI-NP</button>
-        <button class="btn-action" id="btn-priority-p" onclick="selectAlgo('priority-p')"><i data-lucide="shield-alert"></i>PRI-P</button>
-        <button class="btn-action" id="btn-ljf" onclick="selectAlgo('ljf')"><i data-lucide="align-left"></i>LJF</button>
-
-        <div class="dock-separator"></div>
-
-        <button class="btn-action" onclick="addSample()"><i data-lucide="folder-open"></i>Load Sample</button>
-
-        <div class="dock-separator"></div>
-
-        <button class="btn-action run" onclick="startCore()"><i data-lucide="play"></i> EXECUTE CORE</button>
+        </main>
     </div>
 
     <script>
@@ -671,7 +812,18 @@
         window.onload = () => {
             lucide.createIcons();
             addProcess(); // Start with one empty process row
+            
+            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            if (isCollapsed && window.innerWidth > 1024) {
+                document.querySelector('.app-layout').classList.add('collapsed');
+            }
         };
+
+        function toggleSidebar() {
+            const layout = document.querySelector('.app-layout');
+            layout.classList.toggle('collapsed');
+            localStorage.setItem('sidebarCollapsed', layout.classList.contains('collapsed') ? 'true' : 'false');
+        }
 
         // ===== System Logic =====
         let currentAlgo = 'fcfs';
@@ -683,9 +835,19 @@
             document.getElementById(`btn-${algo}`).classList.add('active');
             document.getElementById('rr-config').style.display = algo === 'rr' ? 'block' : 'none';
 
-            const isPriority = algo.startsWith('priority');
-            document.getElementById('th-priority').style.display = isPriority ? 'table-cell' : 'none';
-            document.getElementById('hdr-priority').style.display = isPriority ? 'block' : 'none';
+            const isPriority = algo.startsWith('priority') || algo === 'mlq';
+            const priHeader = document.getElementById('hdr-priority');
+            const priTh = document.getElementById('th-priority');
+            if (algo === 'mlq') {
+                priHeader.innerText = 'Q';
+                priTh.innerText = 'Q';
+            } else {
+                priHeader.innerText = 'PRI';
+                priTh.innerText = 'PRI';
+            }
+
+            priTh.style.display = isPriority ? 'table-cell' : 'none';
+            priHeader.style.display = isPriority ? 'block' : 'none';
             
             const taskHeader = document.getElementById('task-header');
             if (isPriority) {
@@ -696,6 +858,12 @@
 
             document.querySelectorAll('.priority-input').forEach(el => {
                 el.style.display = isPriority ? 'block' : 'none';
+                if (algo === 'mlq') {
+                    el.placeholder = 'Q (1/2)';
+                    if (el.value !== '1' && el.value !== '2') el.value = '1';
+                } else {
+                    el.placeholder = 'PRI';
+                }
             });
             document.querySelectorAll('.task-item').forEach(el => {
                 if (isPriority) {
@@ -761,6 +929,9 @@
             else if (currentAlgo === 'priority-np') res = runPriorityNP(procs);
             else if (currentAlgo === 'priority-p') res = runPriorityP(procs);
             else if (currentAlgo === 'ljf') res = runLJF(procs);
+            else if (currentAlgo === 'mlq') res = runMLQ(procs);
+            else if (currentAlgo === 'mlfq') res = runMLFQ(procs);
+            else if (currentAlgo === 'hrrn') res = runHRRN(procs);
 
             await renderCore(res);
         }
@@ -953,6 +1124,272 @@
             return { results, gantt, logs };
         }
 
+        function runMLQ(procs) {
+            let time = 0, results = [], gantt = [], logs = [];
+            let remaining = procs.map(p => ({ ...p, remaining: p.burst, firstStart: -1 }));
+            let q1_queue = [];
+            let q2_queue = [];
+            let active = null;
+            let quantum_left = 0;
+            let lastId = null, bStart = 0;
+
+            logs.push({ time: 0, msg: `SYSTEM: MLQ Scheduler initialized. Q1 (High, RR q=2), Q2 (Low, FCFS).` });
+
+            while (results.length < procs.length) {
+                remaining.forEach(p => {
+                    if (p.arrival === time && p.remaining > 0) {
+                        if (p.priority === 2) {
+                            q2_queue.push(p);
+                            logs.push({ time, msg: `MLQ: ${p.id} entered Queue 2 (Low).` });
+                        } else {
+                            q1_queue.push(p);
+                            logs.push({ time, msg: `MLQ: ${p.id} entered Queue 1 (High).` });
+                        }
+                    }
+                });
+
+                if (active) {
+                    if (active.remaining === 0) {
+                        results.push({
+                            ...active,
+                            completion: time,
+                            tat: time - active.arrival,
+                            wt: time - active.arrival - active.burst,
+                            rt: active.firstStart - active.arrival
+                        });
+                        gantt.push({ id: active.id, start: bStart, end: time });
+                        logs.push({ time, msg: `MLQ: ${active.id} (Q${active.priority}) Complete.` });
+                        lastId = null;
+                        active = null;
+                    } else if (active.priority !== 2 && quantum_left === 0) {
+                        q1_queue.push(active);
+                        if (lastId) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            lastId = null;
+                        }
+                        active = null;
+                    } else if (active.priority === 2 && q1_queue.length > 0) {
+                        q2_queue.unshift(active);
+                        if (lastId) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            logs.push({ time, msg: `MLQ: High-Priority Q1 process preempted Q2 process ${lastId}.` });
+                            lastId = null;
+                        }
+                        active = null;
+                    }
+                }
+
+                if (!active) {
+                    if (q1_queue.length > 0) {
+                        active = q1_queue.shift();
+                        quantum_left = Math.min(active.remaining, 2);
+                        if (active.firstStart === -1) active.firstStart = time;
+                        
+                        if (lastId && lastId !== active.id) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            bStart = time;
+                        } else if (!lastId) {
+                            bStart = time;
+                        }
+                        lastId = active.id;
+                    } else if (q2_queue.length > 0) {
+                        active = q2_queue.shift();
+                        if (active.firstStart === -1) active.firstStart = time;
+
+                        if (lastId && lastId !== active.id) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            bStart = time;
+                        } else if (!lastId) {
+                            bStart = time;
+                        }
+                        lastId = active.id;
+                    } else {
+                        let nextArr = remaining.filter(p => p.remaining > 0).map(p => p.arrival);
+                        if (nextArr.length > 0) {
+                            let next = Math.min(...nextArr);
+                            gantt.push({ id: 'Idle', start: time, end: next });
+                            time = next;
+                            continue;
+                        }
+                    }
+                }
+
+                if (active) {
+                    active.remaining--;
+                    if (active.priority !== 2) {
+                        quantum_left--;
+                    }
+                    time++;
+                }
+            }
+
+            if (active) {
+                results.push({
+                    ...active,
+                    completion: time,
+                    tat: time - active.arrival,
+                    wt: time - active.arrival - active.burst,
+                    rt: active.firstStart - active.arrival
+                });
+                gantt.push({ id: active.id, start: bStart, end: time });
+            }
+
+            return { results, gantt, logs };
+        }
+
+        function runMLFQ(procs) {
+            let time = 0, results = [], gantt = [], logs = [];
+            let remaining = procs.map(p => ({ ...p, remaining: p.burst, firstStart: -1, currentQueue: 1 }));
+            let q1 = [];
+            let q2 = [];
+            let q3 = [];
+            let active = null;
+            let quantum_left = 0;
+            let lastId = null, bStart = 0;
+
+            logs.push({ time: 0, msg: `SYSTEM: MLFQ Scheduler initialized. Q1 (q=2), Q2 (q=4), Q3 (FCFS).` });
+
+            while (results.length < procs.length) {
+                remaining.forEach(p => {
+                    if (p.arrival === time && p.remaining > 0) {
+                        q1.push(p);
+                        logs.push({ time, msg: `MLFQ: ${p.id} arrived and entered Queue 1.` });
+                    }
+                });
+
+                if (active) {
+                    if (active.remaining === 0) {
+                        results.push({
+                            ...active,
+                            completion: time,
+                            tat: time - active.arrival,
+                            wt: time - active.arrival - active.burst,
+                            rt: active.firstStart - active.arrival
+                        });
+                        gantt.push({ id: active.id, start: bStart, end: time });
+                        logs.push({ time, msg: `MLFQ: ${active.id} completed.` });
+                        lastId = null;
+                        active = null;
+                    } else if (active.currentQueue === 1 && quantum_left === 0) {
+                        active.currentQueue = 2;
+                        q2.push(active);
+                        if (lastId) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            logs.push({ time, msg: `MLFQ: ${active.id} demoted to Queue 2 (exceeded Q1 quantum).` });
+                            lastId = null;
+                        }
+                        active = null;
+                    } else if (active.currentQueue === 2) {
+                        if (q1.length > 0) {
+                            q2.push(active);
+                            if (lastId) {
+                                gantt.push({ id: lastId, start: bStart, end: time });
+                                logs.push({ time, msg: `MLFQ: Q1 arrival preempted ${active.id} in Queue 2.` });
+                                lastId = null;
+                            }
+                            active = null;
+                        } else if (quantum_left === 0) {
+                            active.currentQueue = 3;
+                            q3.push(active);
+                            if (lastId) {
+                                gantt.push({ id: lastId, start: bStart, end: time });
+                                logs.push({ time, msg: `MLFQ: ${active.id} demoted to Queue 3 (exceeded Q2 quantum).` });
+                                lastId = null;
+                            }
+                            active = null;
+                        }
+                    } else if (active.currentQueue === 3 && (q1.length > 0 || q2.length > 0)) {
+                        q3.push(active);
+                        if (lastId) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            logs.push({ time, msg: `MLFQ: Higher queue process preempted ${active.id} in Queue 3.` });
+                            lastId = null;
+                        }
+                        active = null;
+                    }
+                }
+
+                if (!active) {
+                    if (q1.length > 0) {
+                        active = q1.shift();
+                        quantum_left = Math.min(active.remaining, 2);
+                        if (active.firstStart === -1) active.firstStart = time;
+                        if (lastId && lastId !== active.id) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            bStart = time;
+                        } else if (!lastId) bStart = time;
+                        lastId = active.id;
+                    } else if (q2.length > 0) {
+                        active = q2.shift();
+                        quantum_left = Math.min(active.remaining, 4);
+                        if (active.firstStart === -1) active.firstStart = time;
+                        if (lastId && lastId !== active.id) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            bStart = time;
+                        } else if (!lastId) bStart = time;
+                        lastId = active.id;
+                    } else if (q3.length > 0) {
+                        active = q3.shift();
+                        if (active.firstStart === -1) active.firstStart = time;
+                        if (lastId && lastId !== active.id) {
+                            gantt.push({ id: lastId, start: bStart, end: time });
+                            bStart = time;
+                        } else if (!lastId) bStart = time;
+                        lastId = active.id;
+                    } else {
+                        let nextArr = remaining.filter(p => p.remaining > 0).map(p => p.arrival);
+                        if (nextArr.length > 0) {
+                            let next = Math.min(...nextArr);
+                            gantt.push({ id: 'Idle', start: time, end: next });
+                            time = next;
+                            continue;
+                        }
+                    }
+                }
+
+                if (active) {
+                    active.remaining--;
+                    if (active.currentQueue < 3) {
+                        quantum_left--;
+                    }
+                    time++;
+                }
+            }
+
+            return { results, gantt, logs };
+        }
+
+        function runHRRN(procs) {
+            let time = 0, gantt = [], results = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
+            logs.push({ time: 0, msg: `SYSTEM: HRRN Scheduler initialized.` });
+            while (results.length < procs.length) {
+                let ready = remaining.filter(p => p.arrival <= time);
+                if (ready.length === 0) {
+                    let next = Math.min(...remaining.map(p => p.arrival));
+                    gantt.push({ id: 'Idle', start: time, end: next });
+                    time = next;
+                    continue;
+                }
+                
+                ready.forEach(p => {
+                    const w = time - p.arrival;
+                    p.rr = (w + p.burst) / p.burst;
+                });
+
+                ready.sort((a, b) => b.rr - a.rr || a.arrival - b.arrival || a.num - b.num);
+
+                let p = ready[0];
+                const start = time;
+                p.firstStart = start;
+                time += p.burst;
+                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst, rt: p.firstStart - p.arrival });
+                gantt.push({ id: p.id, start, end: time });
+                logs.push({ time: start, msg: `HRRN: Selecting ${p.id} (Response Ratio: ${p.rr.toFixed(2)}).` });
+                remaining = remaining.filter(r => r.id !== p.id);
+            }
+            return { results, gantt, logs };
+        }
+
         // ===== Rendering =====
         async function renderCore(res) {
             const track = document.getElementById('gantt-track');
@@ -1025,7 +1462,7 @@
             }
             res.results.sort((a, b) => parseInt(a.id.substring(1)) - parseInt(b.id.substring(1)));
 
-            const isPriority = currentAlgo.startsWith('priority');
+            const isPriority = currentAlgo.startsWith('priority') || currentAlgo === 'mlq';
             res.results.forEach(r => {
                 const tr = document.createElement('tr');
                 const rowColor = colors[parseInt(r.id.substring(1)) % colors.length];
@@ -1034,7 +1471,7 @@
                     <td style="color:${rowColor}; font-weight:900">${r.id}</td>
                     <td style="color:#ffffff; font-weight:700">${r.arrival}</td>
                     <td style="color:#ffffff; font-weight:700">${r.burst}</td>
-                    ${isPriority ? `<td style="color:#fbbf24; font-weight:900">${r.priority}</td>` : ''}
+                    ${isPriority ? `<td style="color:#fbbf24; font-weight:900">${currentAlgo === 'mlq' ? 'Q' + r.priority : r.priority}</td>` : ''}
                     <td style="color:#ffffff; font-weight:700">${r.completion}</td>
                     <td style="color:#ffffff; font-weight:700">${r.tat}</td>
                     <td style="color:#ffffff; font-weight:700">${r.wt}</td>
