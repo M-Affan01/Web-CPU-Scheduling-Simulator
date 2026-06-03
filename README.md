@@ -47,7 +47,7 @@ Whether you are a student mastering **Shortest Remaining Time First (SRTF)** or 
 
 ## Supported Scheduling Algorithms
 
-NEXUS OS is equipped with 7 core scheduling algorithms, allowing side-by-side behavioral comparison and timing verification:
+NEXUS OS is equipped with 10 core scheduling algorithms, allowing side-by-side behavioral comparison and timing verification:
 
 | Algorithm | Type | Selection Criteria | Description & Tie-Breaking |
 | :--- | :--- | :--- | :--- |
@@ -58,6 +58,9 @@ NEXUS OS is equipped with 7 core scheduling algorithms, allowing side-by-side be
 | **PRI-NP** <br>*(Priority Scheduling)* | Non-Preemptive | Priority Level | Dispatches the task with the highest priority level (user-configured). Ties are resolved using Arrival Time. |
 | **PRI-P** <br>*(Priority Scheduling)* | Preemptive | Priority Level | Preemptive version of Priority. High priority arrivals immediately preempt a running lower-priority task. |
 | **LJF** <br>*(Longest Job First)* | Non-Preemptive | Longest Burst Time | Intended for processing massive tasks first. Selects the process with the largest burst time. |
+| **MLQ** <br>*(Multilevel Queue)* | Preemptive | Queue Priority / RR | Two-level queue. Q1 (High Priority, RR q=2) and Q2 (Low Priority, FCFS). Q1 preempts Q2. |
+| **MLFQ** <br>*(Multilevel Feedback Queue)* | Preemptive | Queue Level / RR | Three-level queue with feedback (Q1: q=2, Q2: q=4, Q3: FCFS). Unfinished tasks demote, higher queues preempt. |
+| **HRRN** <br>*(Highest Response Ratio Next)* | Non-Preemptive | Response Ratio ($RR$) | Dispatches process with highest response ratio $(W+S)/S$ where $W$ is waiting time and $S$ is burst time. |
 
 
 ---
@@ -177,4 +180,3 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 **Email** - [your.maffan2830@gmail.com](mailto:maffan2830@gmail.com)
 
 ---
-
