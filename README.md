@@ -1,4 +1,4 @@
-<h1>CPU Schedular</h1>
+<h1>CPU Scheduler</h1>
 <p><b>Futuristic Processor Command Center & CPU Scheduler Simulator</b></p>
 
 <p>
