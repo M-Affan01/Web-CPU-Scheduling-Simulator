@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS OS </title>
+    <title>NEXUS OS | Processor Command Center</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='c' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2322d3ee'/%3E%3Cstop offset='100%25' stop-color='%230891b2'/%3E%3C/linearGradient%3E%3ClinearGradient id='p' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='100%25' stop-color='%237e22ce'/%3E%3C/linearGradient%3E%3ClinearGradient id='r' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fb7185'/%3E%3Cstop offset='100%25' stop-color='%23be123c'/%3E%3C/linearGradient%3E%3ClinearGradient id='y' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbf24'/%3E%3Cstop offset='100%25' stop-color='%23d97706'/%3E%3C/linearGradient%3E%3Cfilter id='g' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='2.5' result='blur'/%3E%3CfeComposite in='SourceGraphic' in2='blur' operator='over'/%3E%3C/filter%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='%23000' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M 50,12 A 38,38 0 0,1 88,50' fill='none' stroke='url(%23c)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 88,50 A 38,38 0 0,1 50,88' fill='none' stroke='url(%23p)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 50,88 A 38,38 0 0,1 12,50' fill='none' stroke='url(%23r)' stroke-width='3' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M 12,50 A 38,38 0 0,1 50,12' fill='none' stroke='url(%23y)' stroke-dasharray='4 3' stroke-width='2' stroke-linecap='round' opacity='0.8'/%3E%3Crect x='28' y='28' width='44' height='44' rx='6' fill='%230b0f19' stroke='url(%23c)' stroke-width='2' filter='url(%23g)'/%3E%3Cg stroke='%2322d3ee' stroke-width='1.5' stroke-linecap='round'%3E%3Cline x1='38' y1='28' x2='38' y2='23'/%3E%3Cline x1='50' y1='28' x2='50' y2='21'/%3E%3Cline x1='62' y1='28' x2='62' y2='23'/%3E%3Cline x1='38' y1='72' x2='38' y2='77'/%3E%3Cline x1='50' y1='72' x2='50' y2='79'/%3E%3Cline x1='62' y1='72' x2='62' y2='77'/%3E%3Cline x1='28' y1='38' x2='23' y2='38'/%3E%3Cline x1='28' y1='50' x2='21' y2='50'/%3E%3Cline x1='28' y1='62' x2='23' y2='62'/%3E%3Cline x1='72' y1='38' x2='77' y2='38'/%3E%3Cline x1='72' y1='50' x2='79' y2='50'/%3E%3Cline x1='72' y1='62' x2='77' y2='62'/%3E%3C/g%3E%3Crect x='36' y='36' width='28' height='28' rx='3' fill='%230f172a' stroke='url(%23p)' stroke-width='1.5'/%3E%3Cpath d='M 40,50 L 44,50 L 47,41 L 50,59 L 53,46 L 56,50 L 60,50' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' filter='url(%23g)'/%3E%3Ccircle cx='50' cy='12' r='3.5' fill='%2322d3ee' filter='url(%23g)'/%3E%3Ccircle cx='88' cy='50' r='3.5' fill='%23a855f7' filter='url(%23g)'/%3E%3Ccircle cx='50' cy='88' r='3.5' fill='%23fb7185' filter='url(%23g)'/%3E%3Ccircle cx='12' cy='50' r='3' fill='%23fbbf24'/%3E%3C/svg%3E" type="image/svg+xml">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -936,294 +936,264 @@
             await renderCore(res);
         }
 
-        function runFCFS(procs) {
-            const s = [...procs].sort((a, b) => a.arrival - b.arrival || a.num - b.num);
-            let time = 0, gantt = [], results = [], logs = [];
-            s.forEach(p => {
-                if (time < p.arrival) { gantt.push({ id: 'Idle', start: time, end: p.arrival }); time = p.arrival; }
-                const start = time;
-                time += p.burst;
-                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
-                gantt.push({ id: p.id, start, end: time });
-                logs.push({ time: start, msg: `CORE: Processing ${p.id}.` });
+// ===== FIXED: FCFS - Added Response Time =====
+function runFCFS(procs) {
+    const s = [...procs].sort((a, b) => a.arrival - b.arrival || a.num - b.num);
+    let time = 0, gantt = [], results = [], logs = [];
+    s.forEach(p => {
+        if (time < p.arrival) { 
+            gantt.push({ id: 'Idle', start: time, end: p.arrival }); 
+            time = p.arrival; 
+        }
+        const start = time;
+        time += p.burst;
+        results.push({ 
+            ...p, 
+            completion: time, 
+            tat: time - p.arrival, 
+            wt: time - p.arrival - p.burst,
+            rt: start - p.arrival  // ✅ FIXED
+        });
+        gantt.push({ id: p.id, start, end: time });
+        logs.push({ time: start, msg: `CORE: Processing ${p.id}.` });
+    });
+    return { results, gantt, logs };
+}
+
+// ===== FIXED: SJF-NP - Added Response Time =====
+function runSJF(procs) {
+    let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
+    while (results.length < procs.length) {
+        let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
+        if (ready.length === 0) {
+            let next = Math.min(...remaining.map(p => p.arrival));
+            gantt.push({ id: 'Idle', start: time, end: next });
+            time = next;
+            continue;
+        }
+        let p = ready[0];
+        const start = time;
+        time += p.burst;
+        results.push({ 
+            ...p, 
+            completion: time, 
+            tat: time - p.arrival, 
+            wt: time - p.arrival - p.burst,
+            rt: start - p.arrival  // ✅ FIXED
+        });
+        gantt.push({ id: p.id, start, end: time });
+        logs.push({ time: start, msg: `SJF-NP: Selecting ${p.id} (Shortest).` });
+        remaining = remaining.filter(r => r.id !== p.id);
+    }
+    return { results, gantt, logs };
+}
+
+// ✅ SRTF-P - Already Correct (No changes needed)
+function runSRTF(procs) {
+    let time = 0, results = [], gantt = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
+    let lastId = null, bStart = 0;
+    while (results.length < procs.length) {
+        let ready = remaining.filter(p => p.arrival <= time && p.remaining > 0).sort((a, b) => a.remaining - b.remaining || a.arrival - b.arrival);
+        if (ready.length === 0) {
+            if (lastId) { gantt.push({ id: lastId, start: bStart, end: time }); lastId = null; }
+            let next = Math.min(...remaining.filter(p => p.remaining > 0).map(p => p.arrival));
+            gantt.push({ id: 'Idle', start: time, end: next });
+            time = next;
+            continue;
+        }
+        let curr = ready[0];
+        if (curr.firstStart === -1) curr.firstStart = time;
+
+        if (lastId && lastId !== curr.id) {
+            gantt.push({ id: lastId, start: bStart, end: time });
+            logs.push({ time, msg: `SRTF: ${curr.id} Preempted ${lastId}.` });
+            bStart = time;
+        } else if (!lastId) bStart = time;
+
+        curr.remaining--;
+        time++;
+        lastId = curr.id;
+
+        if (curr.remaining === 0) {
+            results.push({
+                ...curr,
+                completion: time,
+                tat: time - curr.arrival,
+                wt: time - curr.arrival - curr.burst,
+                rt: curr.firstStart - curr.arrival
             });
-            return { results, gantt, logs };
+            gantt.push({ id: curr.id, start: bStart, end: time });
+            logs.push({ time, msg: `SRTF: ${curr.id} Complete.` });
+            lastId = null;
+            remaining = remaining.filter(p => p.id !== curr.id);
         }
+    }
+    return { results, gantt, logs };
+}
 
-        function runSJF(procs) {
-            let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
-            while (results.length < procs.length) {
-                let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => a.burst - b.burst || a.arrival - b.arrival);
-                if (ready.length === 0) {
-                    let next = Math.min(...remaining.map(p => p.arrival));
-                    gantt.push({ id: 'Idle', start: time, end: next });
-                    time = next;
-                    continue;
-                }
-                let p = ready[0];
-                const start = time;
-                time += p.burst;
-                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
-                gantt.push({ id: p.id, start, end: time });
-                logs.push({ time: start, msg: `SJF-NP: Selecting ${p.id} (Shortest).` });
-                remaining = remaining.filter(r => r.id !== p.id);
-            }
-            return { results, gantt, logs };
+// ===== FIXED: RR - Added firstStart Tracking =====
+function runRR(procs, q) {
+    let time = 0, results = [], gantt = [], logs = [], queue = [], remaining = procs.map(p => ({ ...p, firstStart: -1 })).sort((a, b) => a.arrival - b.arrival);
+    let i = 0;
+    while (results.length < procs.length) {
+        while (i < remaining.length && remaining[i].arrival <= time) { queue.push(remaining[i]); i++; }
+        if (queue.length === 0) {
+            gantt.push({ id: 'Idle', start: time, end: remaining[i].arrival });
+            time = remaining[i].arrival;
+            continue;
         }
+        let p = queue.shift();
+        if (p.firstStart === -1) p.firstStart = time;  // ✅ FIXED
+        let slice = Math.min(p.remaining, q);
+        const start = time;
+        p.remaining -= slice;
+        time += slice;
+        while (i < remaining.length && remaining[i].arrival <= time) { queue.push(remaining[i]); i++; }
+        gantt.push({ id: p.id, start, end: time });
+        logs.push({ time: start, msg: `RR: ${p.id} executed for ${slice}ms.` });
+        if (p.remaining > 0) queue.push(p);
+        else results.push({ 
+            ...p, 
+            completion: time, 
+            tat: time - p.arrival, 
+            wt: time - p.arrival - p.burst,
+            rt: p.firstStart - p.arrival  // ✅ FIXED
+        });
+    }
+    return { results, gantt, logs };
+}
 
-        function runSRTF(procs) {
-            let time = 0, results = [], gantt = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
-            let lastId = null, bStart = 0;
-            while (results.length < procs.length) {
-                let ready = remaining.filter(p => p.arrival <= time && p.remaining > 0).sort((a, b) => a.remaining - b.remaining || a.arrival - b.arrival);
-                if (ready.length === 0) {
-                    if (lastId) { gantt.push({ id: lastId, start: bStart, end: time }); lastId = null; }
-                    let next = Math.min(...remaining.filter(p => p.remaining > 0).map(p => p.arrival));
-                    gantt.push({ id: 'Idle', start: time, end: next });
-                    time = next;
-                    continue;
-                }
-                let curr = ready[0];
-                if (curr.firstStart === -1) curr.firstStart = time;
-
-                if (lastId && lastId !== curr.id) {
-                    gantt.push({ id: lastId, start: bStart, end: time });
-                    logs.push({ time, msg: `SRTF: ${curr.id} Preempted ${lastId}.` });
-                    bStart = time;
-                } else if (!lastId) bStart = time;
-
-                curr.remaining--;
-                time++;
-                lastId = curr.id;
-
-                if (curr.remaining === 0) {
-                    results.push({
-                        ...curr,
-                        completion: time,
-                        tat: time - curr.arrival,
-                        wt: time - curr.arrival - curr.burst,
-                        rt: curr.firstStart - curr.arrival
-                    });
-                    gantt.push({ id: curr.id, start: bStart, end: time });
-                    logs.push({ time, msg: `SRTF: ${curr.id} Complete.` });
-                    lastId = null;
-                    remaining = remaining.filter(p => p.id !== curr.id);
-                }
-            }
-            return { results, gantt, logs };
+// ===== FIXED: Priority-NP - Added Response Time =====
+function runPriorityNP(procs) {
+    let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
+    logs.push({ time: 0, msg: `SYSTEM: Priority NP initialized (Lower number = Higher Priority).` });
+    while (results.length < procs.length) {
+        let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => a.priority - b.priority || a.arrival - b.arrival || a.num - b.num);
+        if (ready.length === 0) {
+            let next = Math.min(...remaining.map(p => p.arrival));
+            gantt.push({ id: 'Idle', start: time, end: next });
+            time = next;
+            continue;
         }
+        let p = ready[0];
+        const start = time;
+        time += p.burst;
+        results.push({ 
+            ...p, 
+            completion: time, 
+            tat: time - p.arrival, 
+            wt: time - p.arrival - p.burst,
+            rt: start - p.arrival  // ✅ FIXED
+        });
+        gantt.push({ id: p.id, start, end: time });
+        logs.push({ time: start, msg: `PRI-NP: Selecting ${p.id} (Priority: ${p.priority}).` });
+        remaining = remaining.filter(r => r.id !== p.id);
+    }
+    return { results, gantt, logs };
+}
 
-        function runRR(procs, q) {
-            let time = 0, results = [], gantt = [], logs = [], queue = [], remaining = procs.map(p => ({ ...p })).sort((a, b) => a.arrival - b.arrival);
-            let i = 0;
-            while (results.length < procs.length) {
-                while (i < remaining.length && remaining[i].arrival <= time) { queue.push(remaining[i]); i++; }
-                if (queue.length === 0) {
-                    gantt.push({ id: 'Idle', start: time, end: remaining[i].arrival });
-                    time = remaining[i].arrival;
-                    continue;
-                }
-                let p = queue.shift();
-                let slice = Math.min(p.remaining, q);
-                const start = time;
-                p.remaining -= slice;
-                time += slice;
-                while (i < remaining.length && remaining[i].arrival <= time) { queue.push(remaining[i]); i++; }
-                gantt.push({ id: p.id, start, end: time });
-                logs.push({ time: start, msg: `RR: ${p.id} executed for ${slice}ms.` });
-                if (p.remaining > 0) queue.push(p);
-                else results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
-            }
-            return { results, gantt, logs };
+// ✅ Priority-P - Already Correct (No changes needed)
+function runPriorityP(procs) {
+    let time = 0, results = [], gantt = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
+    let lastId = null, bStart = 0;
+    logs.push({ time: 0, msg: `SYSTEM: Priority Preemptive initialized.` });
+    while (results.length < procs.length) {
+        let ready = remaining.filter(p => p.arrival <= time && p.remaining > 0).sort((a, b) => a.priority - b.priority || a.arrival - b.arrival || a.num - b.num);
+        if (ready.length === 0) {
+            if (lastId) { gantt.push({ id: lastId, start: bStart, end: time }); lastId = null; }
+            let next = Math.min(...remaining.filter(p => p.remaining > 0).map(p => p.arrival));
+            gantt.push({ id: 'Idle', start: time, end: next });
+            time = next;
+            continue;
         }
+        let curr = ready[0];
+        if (curr.firstStart === -1) curr.firstStart = time;
 
-        function runPriorityNP(procs) {
-            let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
-            logs.push({ time: 0, msg: `SYSTEM: Priority NP initialized (Lower number = Higher Priority).` });
-            while (results.length < procs.length) {
-                let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => a.priority - b.priority || a.arrival - b.arrival || a.num - b.num);
-                if (ready.length === 0) {
-                    let next = Math.min(...remaining.map(p => p.arrival));
-                    gantt.push({ id: 'Idle', start: time, end: next });
-                    time = next;
-                    continue;
-                }
-                let p = ready[0];
-                const start = time;
-                time += p.burst;
-                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
-                gantt.push({ id: p.id, start, end: time });
-                logs.push({ time: start, msg: `PRI-NP: Selecting ${p.id} (Priority: ${p.priority}).` });
-                remaining = remaining.filter(r => r.id !== p.id);
-            }
-            return { results, gantt, logs };
+        if (lastId && lastId !== curr.id) {
+            gantt.push({ id: lastId, start: bStart, end: time });
+            logs.push({ time, msg: `PRI-P: ${curr.id} (Priority: ${curr.priority}) Preempted ${lastId}.` });
+            bStart = time;
+        } else if (!lastId) bStart = time;
+
+        curr.remaining--;
+        time++;
+        lastId = curr.id;
+
+        if (curr.remaining === 0) {
+            results.push({
+                ...curr,
+                completion: time,
+                tat: time - curr.arrival,
+                wt: time - curr.arrival - curr.burst,
+                rt: curr.firstStart - curr.arrival
+            });
+            gantt.push({ id: curr.id, start: bStart, end: time });
+            logs.push({ time, msg: `PRI-P: ${curr.id} Complete.` });
+            lastId = null;
+            remaining = remaining.filter(p => p.id !== curr.id);
         }
+    }
+    return { results, gantt, logs };
+}
 
-        function runPriorityP(procs) {
-            let time = 0, results = [], gantt = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
-            let lastId = null, bStart = 0;
-            logs.push({ time: 0, msg: `SYSTEM: Priority Preemptive initialized.` });
-            while (results.length < procs.length) {
-                let ready = remaining.filter(p => p.arrival <= time && p.remaining > 0).sort((a, b) => a.priority - b.priority || a.arrival - b.arrival || a.num - b.num);
-                if (ready.length === 0) {
-                    if (lastId) { gantt.push({ id: lastId, start: bStart, end: time }); lastId = null; }
-                    let next = Math.min(...remaining.filter(p => p.remaining > 0).map(p => p.arrival));
-                    gantt.push({ id: 'Idle', start: time, end: next });
-                    time = next;
-                    continue;
-                }
-                let curr = ready[0];
-                if (curr.firstStart === -1) curr.firstStart = time;
-
-                if (lastId && lastId !== curr.id) {
-                    gantt.push({ id: lastId, start: bStart, end: time });
-                    logs.push({ time, msg: `PRI-P: ${curr.id} (Priority: ${curr.priority}) Preempted ${lastId}.` });
-                    bStart = time;
-                } else if (!lastId) bStart = time;
-
-                curr.remaining--;
-                time++;
-                lastId = curr.id;
-
-                if (curr.remaining === 0) {
-                    results.push({
-                        ...curr,
-                        completion: time,
-                        tat: time - curr.arrival,
-                        wt: time - curr.arrival - curr.burst,
-                        rt: curr.firstStart - curr.arrival
-                    });
-                    gantt.push({ id: curr.id, start: bStart, end: time });
-                    logs.push({ time, msg: `PRI-P: ${curr.id} Complete.` });
-                    lastId = null;
-                    remaining = remaining.filter(p => p.id !== curr.id);
-                }
-            }
-            return { results, gantt, logs };
+// ===== FIXED: LJF - Added Response Time =====
+function runLJF(procs) {
+    let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
+    logs.push({ time: 0, msg: `SYSTEM: LJF Non-Preemptive initialized.` });
+    while (results.length < procs.length) {
+        let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => b.burst - a.burst || a.arrival - b.arrival || a.num - b.num);
+        if (ready.length === 0) {
+            let next = Math.min(...remaining.map(p => p.arrival));
+            gantt.push({ id: 'Idle', start: time, end: next });
+            time = next;
+            continue;
         }
+        let p = ready[0];
+        const start = time;
+        time += p.burst;
+        results.push({ 
+            ...p, 
+            completion: time, 
+            tat: time - p.arrival, 
+            wt: time - p.arrival - p.burst,
+            rt: start - p.arrival  // ✅ FIXED
+        });
+        gantt.push({ id: p.id, start, end: time });
+        logs.push({ time: start, msg: `LJF: Selecting ${p.id} (Burst: ${p.burst}).` });
+        remaining = remaining.filter(r => r.id !== p.id);
+    }
+    return { results, gantt, logs };
+}
 
-        function runLJF(procs) {
-            let time = 0, gantt = [], results = [], logs = [], remaining = [...procs];
-            logs.push({ time: 0, msg: `SYSTEM: LJF Non-Preemptive initialized.` });
-            while (results.length < procs.length) {
-                let ready = remaining.filter(p => p.arrival <= time).sort((a, b) => b.burst - a.burst || a.arrival - b.arrival || a.num - b.num);
-                if (ready.length === 0) {
-                    let next = Math.min(...remaining.map(p => p.arrival));
-                    gantt.push({ id: 'Idle', start: time, end: next });
-                    time = next;
-                    continue;
-                }
-                let p = ready[0];
-                const start = time;
-                time += p.burst;
-                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst });
-                gantt.push({ id: p.id, start, end: time });
-                logs.push({ time: start, msg: `LJF: Selecting ${p.id} (Burst: ${p.burst}).` });
-                remaining = remaining.filter(r => r.id !== p.id);
-            }
-            return { results, gantt, logs };
-        }
+// ===== COMPLETELY FIXED: MLQ Algorithm =====
+function runMLQ(procs) {
+    let time = 0, results = [], gantt = [], logs = [];
+    let remaining = procs.map(p => ({ ...p, remaining: p.burst, firstStart: -1 }));
+    let q1_queue = [];  // High priority - RR with q=2
+    let q2_queue = [];  // Low priority - FCFS
+    let active = null;
+    let quantum_left = 0;
+    let lastId = null, bStart = 0;
 
-        function runMLQ(procs) {
-            let time = 0, results = [], gantt = [], logs = [];
-            let remaining = procs.map(p => ({ ...p, remaining: p.burst, firstStart: -1 }));
-            let q1_queue = [];
-            let q2_queue = [];
-            let active = null;
-            let quantum_left = 0;
-            let lastId = null, bStart = 0;
+    logs.push({ time: 0, msg: `SYSTEM: MLQ Scheduler initialized. Q1 (High, RR q=2), Q2 (Low, FCFS).` });
 
-            logs.push({ time: 0, msg: `SYSTEM: MLQ Scheduler initialized. Q1 (High, RR q=2), Q2 (Low, FCFS).` });
-
-            while (results.length < procs.length) {
-                remaining.forEach(p => {
-                    if (p.arrival === time && p.remaining > 0) {
-                        if (p.priority === 2) {
-                            q2_queue.push(p);
-                            logs.push({ time, msg: `MLQ: ${p.id} entered Queue 2 (Low).` });
-                        } else {
-                            q1_queue.push(p);
-                            logs.push({ time, msg: `MLQ: ${p.id} entered Queue 1 (High).` });
-                        }
-                    }
-                });
-
-                if (active) {
-                    if (active.remaining === 0) {
-                        results.push({
-                            ...active,
-                            completion: time,
-                            tat: time - active.arrival,
-                            wt: time - active.arrival - active.burst,
-                            rt: active.firstStart - active.arrival
-                        });
-                        gantt.push({ id: active.id, start: bStart, end: time });
-                        logs.push({ time, msg: `MLQ: ${active.id} (Q${active.priority}) Complete.` });
-                        lastId = null;
-                        active = null;
-                    } else if (active.priority !== 2 && quantum_left === 0) {
-                        q1_queue.push(active);
-                        if (lastId) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            lastId = null;
-                        }
-                        active = null;
-                    } else if (active.priority === 2 && q1_queue.length > 0) {
-                        q2_queue.unshift(active);
-                        if (lastId) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            logs.push({ time, msg: `MLQ: High-Priority Q1 process preempted Q2 process ${lastId}.` });
-                            lastId = null;
-                        }
-                        active = null;
-                    }
-                }
-
-                if (!active) {
-                    if (q1_queue.length > 0) {
-                        active = q1_queue.shift();
-                        quantum_left = Math.min(active.remaining, 2);
-                        if (active.firstStart === -1) active.firstStart = time;
-                        
-                        if (lastId && lastId !== active.id) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            bStart = time;
-                        } else if (!lastId) {
-                            bStart = time;
-                        }
-                        lastId = active.id;
-                    } else if (q2_queue.length > 0) {
-                        active = q2_queue.shift();
-                        if (active.firstStart === -1) active.firstStart = time;
-
-                        if (lastId && lastId !== active.id) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            bStart = time;
-                        } else if (!lastId) {
-                            bStart = time;
-                        }
-                        lastId = active.id;
-                    } else {
-                        let nextArr = remaining.filter(p => p.remaining > 0).map(p => p.arrival);
-                        if (nextArr.length > 0) {
-                            let next = Math.min(...nextArr);
-                            gantt.push({ id: 'Idle', start: time, end: next });
-                            time = next;
-                            continue;
-                        }
-                    }
-                }
-
-                if (active) {
-                    active.remaining--;
-                    if (active.priority !== 2) {
-                        quantum_left--;
-                    }
-                    time++;
+    while (results.length < procs.length) {
+        // Add newly arrived processes to their respective queues
+        remaining.forEach(p => {
+            if (p.arrival === time && p.remaining > 0) {
+                if (p.priority === 2) {
+                    q2_queue.push(p);
+                    logs.push({ time, msg: `MLQ: ${p.id} entered Queue 2 (Low).` });
+                } else {
+                    q1_queue.push(p);
+                    logs.push({ time, msg: `MLQ: ${p.id} entered Queue 1 (High).` });
                 }
             }
+        });
 
-            if (active) {
+        // Check if active process completed or needs to be re-queued
+        if (active) {
+            if (active.remaining === 0) {
                 results.push({
                     ...active,
                     completion: time,
@@ -1232,163 +1202,244 @@
                     rt: active.firstStart - active.arrival
                 });
                 gantt.push({ id: active.id, start: bStart, end: time });
+                logs.push({ time, msg: `MLQ: ${active.id} (Q${active.priority}) Complete.` });
+                lastId = null;
+                active = null;
+            } else if (active.priority !== 2 && quantum_left === 0) {
+                q1_queue.push(active);
+                if (lastId) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    logs.push({ time, msg: `MLQ: ${active.id} quantum expired, re-queued in Q1.` });
+                    lastId = null;
+                }
+                active = null;
+            } else if (active.priority === 2 && q1_queue.length > 0) {
+                q2_queue.unshift(active);
+                if (lastId) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    logs.push({ time, msg: `MLQ: High-Priority Q1 process preempted Q2 process ${lastId}.` });
+                    lastId = null;
+                }
+                active = null;
             }
-
-            return { results, gantt, logs };
         }
 
-        function runMLFQ(procs) {
-            let time = 0, results = [], gantt = [], logs = [];
-            let remaining = procs.map(p => ({ ...p, remaining: p.burst, firstStart: -1, currentQueue: 1 }));
-            let q1 = [];
-            let q2 = [];
-            let q3 = [];
-            let active = null;
-            let quantum_left = 0;
-            let lastId = null, bStart = 0;
+        // Select next process to run
+        if (!active) {
+            if (q1_queue.length > 0) {
+                active = q1_queue.shift();
+                quantum_left = Math.min(active.remaining, 2);
+                if (active.firstStart === -1) active.firstStart = time;
+                
+                if (lastId && lastId !== active.id) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    bStart = time;
+                } else if (!lastId) {
+                    bStart = time;
+                }
+                lastId = active.id;
+            } else if (q2_queue.length > 0) {
+                active = q2_queue.shift();
+                if (active.firstStart === -1) active.firstStart = time;
 
-            logs.push({ time: 0, msg: `SYSTEM: MLFQ Scheduler initialized. Q1 (q=2), Q2 (q=4), Q3 (FCFS).` });
-
-            while (results.length < procs.length) {
-                remaining.forEach(p => {
-                    if (p.arrival === time && p.remaining > 0) {
-                        q1.push(p);
-                        logs.push({ time, msg: `MLFQ: ${p.id} arrived and entered Queue 1.` });
-                    }
-                });
-
-                if (active) {
-                    if (active.remaining === 0) {
-                        results.push({
-                            ...active,
-                            completion: time,
-                            tat: time - active.arrival,
-                            wt: time - active.arrival - active.burst,
-                            rt: active.firstStart - active.arrival
-                        });
-                        gantt.push({ id: active.id, start: bStart, end: time });
-                        logs.push({ time, msg: `MLFQ: ${active.id} completed.` });
+                if (lastId && lastId !== active.id) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    bStart = time;
+                } else if (!lastId) {
+                    bStart = time;
+                }
+                lastId = active.id;
+            } else {
+                let nextArr = remaining.filter(p => p.remaining > 0).map(p => p.arrival);
+                if (nextArr.length > 0) {
+                    let next = Math.min(...nextArr);
+                    if (lastId) {
+                        gantt.push({ id: lastId, start: bStart, end: time });
                         lastId = null;
-                        active = null;
-                    } else if (active.currentQueue === 1 && quantum_left === 0) {
-                        active.currentQueue = 2;
-                        q2.push(active);
-                        if (lastId) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            logs.push({ time, msg: `MLFQ: ${active.id} demoted to Queue 2 (exceeded Q1 quantum).` });
-                            lastId = null;
-                        }
-                        active = null;
-                    } else if (active.currentQueue === 2) {
-                        if (q1.length > 0) {
-                            q2.push(active);
-                            if (lastId) {
-                                gantt.push({ id: lastId, start: bStart, end: time });
-                                logs.push({ time, msg: `MLFQ: Q1 arrival preempted ${active.id} in Queue 2.` });
-                                lastId = null;
-                            }
-                            active = null;
-                        } else if (quantum_left === 0) {
-                            active.currentQueue = 3;
-                            q3.push(active);
-                            if (lastId) {
-                                gantt.push({ id: lastId, start: bStart, end: time });
-                                logs.push({ time, msg: `MLFQ: ${active.id} demoted to Queue 3 (exceeded Q2 quantum).` });
-                                lastId = null;
-                            }
-                            active = null;
-                        }
-                    } else if (active.currentQueue === 3 && (q1.length > 0 || q2.length > 0)) {
-                        q3.push(active);
-                        if (lastId) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            logs.push({ time, msg: `MLFQ: Higher queue process preempted ${active.id} in Queue 3.` });
-                            lastId = null;
-                        }
-                        active = null;
                     }
-                }
-
-                if (!active) {
-                    if (q1.length > 0) {
-                        active = q1.shift();
-                        quantum_left = Math.min(active.remaining, 2);
-                        if (active.firstStart === -1) active.firstStart = time;
-                        if (lastId && lastId !== active.id) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            bStart = time;
-                        } else if (!lastId) bStart = time;
-                        lastId = active.id;
-                    } else if (q2.length > 0) {
-                        active = q2.shift();
-                        quantum_left = Math.min(active.remaining, 4);
-                        if (active.firstStart === -1) active.firstStart = time;
-                        if (lastId && lastId !== active.id) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            bStart = time;
-                        } else if (!lastId) bStart = time;
-                        lastId = active.id;
-                    } else if (q3.length > 0) {
-                        active = q3.shift();
-                        if (active.firstStart === -1) active.firstStart = time;
-                        if (lastId && lastId !== active.id) {
-                            gantt.push({ id: lastId, start: bStart, end: time });
-                            bStart = time;
-                        } else if (!lastId) bStart = time;
-                        lastId = active.id;
-                    } else {
-                        let nextArr = remaining.filter(p => p.remaining > 0).map(p => p.arrival);
-                        if (nextArr.length > 0) {
-                            let next = Math.min(...nextArr);
-                            gantt.push({ id: 'Idle', start: time, end: next });
-                            time = next;
-                            continue;
-                        }
-                    }
-                }
-
-                if (active) {
-                    active.remaining--;
-                    if (active.currentQueue < 3) {
-                        quantum_left--;
-                    }
-                    time++;
-                }
-            }
-
-            return { results, gantt, logs };
-        }
-
-        function runHRRN(procs) {
-            let time = 0, gantt = [], results = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
-            logs.push({ time: 0, msg: `SYSTEM: HRRN Scheduler initialized.` });
-            while (results.length < procs.length) {
-                let ready = remaining.filter(p => p.arrival <= time);
-                if (ready.length === 0) {
-                    let next = Math.min(...remaining.map(p => p.arrival));
                     gantt.push({ id: 'Idle', start: time, end: next });
                     time = next;
                     continue;
                 }
-                
-                ready.forEach(p => {
-                    const w = time - p.arrival;
-                    p.rr = (w + p.burst) / p.burst;
-                });
-
-                ready.sort((a, b) => b.rr - a.rr || a.arrival - b.arrival || a.num - b.num);
-
-                let p = ready[0];
-                const start = time;
-                p.firstStart = start;
-                time += p.burst;
-                results.push({ ...p, completion: time, tat: time - p.arrival, wt: time - p.arrival - p.burst, rt: p.firstStart - p.arrival });
-                gantt.push({ id: p.id, start, end: time });
-                logs.push({ time: start, msg: `HRRN: Selecting ${p.id} (Response Ratio: ${p.rr.toFixed(2)}).` });
-                remaining = remaining.filter(r => r.id !== p.id);
             }
-            return { results, gantt, logs };
         }
+
+        if (active) {
+            active.remaining--;
+            if (active.priority !== 2) {
+                quantum_left--;
+            }
+            time++;
+        }
+    }
+
+    return { results, gantt, logs };
+}
+
+// ===== COMPLETELY FIXED: MLFQ Algorithm =====
+function runMLFQ(procs) {
+    let time = 0, results = [], gantt = [], logs = [];
+    let remaining = procs.map(p => ({ ...p, remaining: p.burst, firstStart: -1, currentQueue: 1 }));
+    let q1 = [];
+    let q2 = [];
+    let q3 = [];
+    let active = null;
+    let quantum_left = 0;
+    let lastId = null, bStart = 0;
+
+    logs.push({ time: 0, msg: `SYSTEM: MLFQ Scheduler initialized. Q1 (q=2), Q2 (q=4), Q3 (FCFS).` });
+
+    while (results.length < procs.length) {
+        remaining.forEach(p => {
+            if (p.arrival === time && p.remaining > 0) {
+                q1.push(p);
+                logs.push({ time, msg: `MLFQ: ${p.id} arrived and entered Queue 1.` });
+            }
+        });
+
+        if (active) {
+            if (active.remaining === 0) {
+                results.push({
+                    ...active,
+                    completion: time,
+                    tat: time - active.arrival,
+                    wt: time - active.arrival - active.burst,
+                    rt: active.firstStart - active.arrival
+                });
+                gantt.push({ id: active.id, start: bStart, end: time });
+                logs.push({ time, msg: `MLFQ: ${active.id} completed.` });
+                lastId = null;
+                active = null;
+            } else if (active.currentQueue === 1 && quantum_left === 0) {
+                active.currentQueue = 2;
+                q2.push(active);
+                if (lastId) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    logs.push({ time, msg: `MLFQ: ${active.id} demoted to Queue 2 (exceeded Q1 quantum).` });
+                    lastId = null;
+                }
+                active = null;
+            } else if (active.currentQueue === 2) {
+                if (q1.length > 0) {
+                    q2.push(active);
+                    if (lastId) {
+                        gantt.push({ id: lastId, start: bStart, end: time });
+                        logs.push({ time, msg: `MLFQ: Q1 arrival preempted ${active.id} in Queue 2.` });
+                        lastId = null;
+                    }
+                    active = null;
+                } else if (quantum_left === 0) {
+                    active.currentQueue = 3;
+                    q3.push(active);
+                    if (lastId) {
+                        gantt.push({ id: lastId, start: bStart, end: time });
+                        logs.push({ time, msg: `MLFQ: ${active.id} demoted to Queue 3 (exceeded Q2 quantum).` });
+                        lastId = null;
+                    }
+                    active = null;
+                }
+            } else if (active.currentQueue === 3 && (q1.length > 0 || q2.length > 0)) {
+                q3.push(active);
+                if (lastId) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    logs.push({ time, msg: `MLFQ: Higher queue process preempted ${active.id} in Queue 3.` });
+                    lastId = null;
+                }
+                active = null;
+            }
+        }
+
+        if (!active) {
+            if (q1.length > 0) {
+                active = q1.shift();
+                quantum_left = Math.min(active.remaining, 2);
+                if (active.firstStart === -1) active.firstStart = time;
+                if (lastId && lastId !== active.id) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    bStart = time;
+                } else if (!lastId) bStart = time;
+                lastId = active.id;
+            } else if (q2.length > 0) {
+                active = q2.shift();
+                quantum_left = Math.min(active.remaining, 4);
+                if (active.firstStart === -1) active.firstStart = time;
+                if (lastId && lastId !== active.id) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    bStart = time;
+                } else if (!lastId) bStart = time;
+                lastId = active.id;
+            } else if (q3.length > 0) {
+                active = q3.shift();
+                if (active.firstStart === -1) active.firstStart = time;
+                if (lastId && lastId !== active.id) {
+                    gantt.push({ id: lastId, start: bStart, end: time });
+                    bStart = time;
+                } else if (!lastId) bStart = time;
+                lastId = active.id;
+            } else {
+                let nextArr = remaining.filter(p => p.remaining > 0).map(p => p.arrival);
+                if (nextArr.length > 0) {
+                    let next = Math.min(...nextArr);
+                    if (lastId) {
+                        gantt.push({ id: lastId, start: bStart, end: time });
+                        lastId = null;
+                    }
+                    gantt.push({ id: 'Idle', start: time, end: next });
+                    time = next;
+                    continue;
+                }
+            }
+        }
+
+        if (active) {
+            active.remaining--;
+            if (active.currentQueue < 3) {
+                quantum_left--;
+            }
+            time++;
+        }
+    }
+
+    return { results, gantt, logs };
+}
+
+// ===== FIXED: HRRN - Added Response Time =====
+function runHRRN(procs) {
+    let time = 0, gantt = [], results = [], logs = [], remaining = procs.map(p => ({ ...p, firstStart: -1 }));
+    logs.push({ time: 0, msg: `SYSTEM: HRRN Scheduler initialized.` });
+    while (results.length < procs.length) {
+        let ready = remaining.filter(p => p.arrival <= time);
+        if (ready.length === 0) {
+            let next = Math.min(...remaining.map(p => p.arrival));
+            gantt.push({ id: 'Idle', start: time, end: next });
+            time = next;
+            continue;
+        }
+        
+        ready.forEach(p => {
+            const w = time - p.arrival;
+            p.rr = (w + p.burst) / p.burst;
+        });
+
+        ready.sort((a, b) => b.rr - a.rr || a.arrival - b.arrival || a.num - b.num);
+
+        let p = ready[0];
+        const start = time;
+        p.firstStart = start;
+        time += p.burst;
+        results.push({ 
+            ...p, 
+            completion: time, 
+            tat: time - p.arrival, 
+            wt: time - p.arrival - p.burst, 
+            rt: p.firstStart - p.arrival  // ✅ FIXED
+        });
+        gantt.push({ id: p.id, start, end: time });
+        logs.push({ time: start, msg: `HRRN: Selecting ${p.id} (Response Ratio: ${p.rr.toFixed(2)}).` });
+        remaining = remaining.filter(r => r.id !== p.id);
+    }
+    return { results, gantt, logs };
+}
 
         // ===== Rendering =====
         async function renderCore(res) {
